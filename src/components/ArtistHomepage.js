@@ -1,5 +1,7 @@
 import React from 'react';
 import Lisa from './Lisa.jpg';
+import Track from './Track';
+import Album from './Album';
 import {Link} from 'react-router-dom';
 import {ALL, POPULAR, TRACKS, ALBUMS} from './utils';
 
@@ -35,43 +37,38 @@ export default class ArtistHomepage extends React.Component {
         <Link to="/artist/albums" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc(black):h Bdbs(s):h Bdbw(2px) ' + (tab === ALBUMS ? 'C(black) Bdbs(s)' : 'C(gray)')}>Albums</Link>
       </div>
       <div class="D(f)">
-        <div class="Py(40px) W(70%) Pend(20px) Bdends(s) Bdendc(lightgray) Bdendw(1px)">
+        {tab === ALL && <div class="Pt(40px) W(70%) Pend(20px) Bdends(s) Bdendc(lightgray) Bdendw(1px)">
           <span class="Fz(22px)">Recent</span>
-          <div class="D(f)">
-            <Link to="/detail"><img class="W(160px) H(160px) shadow p-2 rounded" src="http://st.cdjapan.co.jp/pictures/l/05/32/SVWC-70233.jpg" alt=""/></Link>
-            <div class="W(100%) Mstart(20px)">
-              <div class="D(f) Jc(sb)">
-                <div class="D(f)">
-                  <span class="C(white) W(40px) H(40px) D(f) Jc(c) Ai(c) P(4px) Bgc(black) Bdrs(100%)">
-                    <span class="Fz(14px)"><i class="fas fa-play"></i></span>
-                  </span>
-                  <div class="Mstart(10px)">
-                    <Link to="/artist/all" class="D(b) Td(n):h Fz(14px) C(gray)">Lisa</Link>
-                    <Link to="/detail" class="D(b) Td(n):h C(black) Fz(16px)">Catch the moment</Link>
-                  </div>
-                </div>
-                <div class="Fl(end)">
-                6 months ago
-                </div>
-              </div>
-              <div class="Mt(10px) H(60px) Bds(s) ">
-              canvas
-              </div>
-              <div class="Mt(10px)">
-                <i class="Mend(20px) Cur(p) fas fa-thumbs-up"></i>
-                <i class="Mend(20px) Cur(p) fas fa-download"></i>
-                <i class="Pt(4px) Pos(a) fas fa-plus"></i>
-                <select class="Pos(r) W(20px) Op(0)" defaultValue="disabled">
-                  <option value="disabled" class="D(n)" disabled>---</option>
-                  <option>Add to playlist </option>
-                  <option>Add to collection </option>
-                </select>
-                <span class="Fl(end) Cur(p) Fz(14px)"><i class="Mend(6px) fas fa-play"></i> 32</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="P(30px)">
+          <Track/>
+          <Track/>
+          <Track/>
+          <Track/>
+          <Track/>
+        </div>}
+
+        {tab === POPULAR && <div class="Pt(40px) W(70%) Pend(20px) Bdends(s) Bdendc(lightgray) Bdendw(1px)">
+          <Track/>
+          <Track/>
+          <Track/>
+          <Track/>
+          <Track/>
+        </div>}
+
+        {tab === TRACKS && <div class="Pt(40px) W(70%) Pend(20px) Bdends(s) Bdendc(lightgray) Bdendw(1px)">
+          <Track/>
+          <Track/>
+          <Track/>
+          <Track/>
+          <Track/>
+        </div>}
+
+        {tab === ALBUMS && <div class="Pt(40px) W(70%) Pend(20px) Bdends(s) Bdendc(lightgray) Bdendw(1px)">
+          <Album/>
+          <Album/>
+
+        </div>}
+
+        <div class="P(30px)" id="panel">
           <span class="D(ib) C(gray) Pend(20px)">
             <div class="Fz(14px)">Followers</div>
             <div class="Fz(20px)">387</div>
