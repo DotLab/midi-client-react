@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 export default class MidiOverview extends React.Component {
   constructor(props) {
@@ -18,8 +19,8 @@ export default class MidiOverview extends React.Component {
         </span>
       </div>
       <div>
-        <div class="Mt(6px) Px(4px) Cur(p) Td(u):h Fz(14px) Fw(b)">New Dance Now</div>
-        <span class="Mt(6px) Px(4px) Cur(p) Td(u):h Fz(12px) C(#999999)">Main Room</span>
+        <Link to="/detail" class="Td(n):h C(black):h C(black) Mt(6px) Px(4px) Cur(p) Fz(14px) Fw(b)">New Dance Now</Link>
+        <Link to="/album/detail" class="Td(n):h C(black):h D(b) Mt(6px) Px(4px) Cur(p) Fz(12px) C(#999999)">Main Room</Link>
       </div>
     </div>;
   }

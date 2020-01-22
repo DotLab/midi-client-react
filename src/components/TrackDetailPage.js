@@ -1,5 +1,5 @@
 import React from 'react';
-import SongComment from './SongComment';
+import TrackComment from './TrackComment';
 import Comment from './Comment';
 import Lisa from './Lisa.jpg';
 import TrackSmall from './TrackSmall';
@@ -30,8 +30,8 @@ export default class TrackDetailPage extends React.Component {
           <div class="Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(lightgray) H(26px)">
             <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">0:29</span>
           </div>
-          <SongComment/>
-          <SongComment/>
+          <TrackComment/>
+          <TrackComment/>
         </div>
         <div class="Mstart(30px) W(30%)">
           <img class="H(100%) W(100%) " src="https://i1.sndcdn.com/artworks-EfwX4O5Coal6-0-t500x500.jpg" alt=""/>

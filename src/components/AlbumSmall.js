@@ -11,8 +11,8 @@ export default class AlbumSmall extends React.Component {
     return <div class="D(f) Mt(20px) Pos(r)">
       <img class="H(50px) W(50px)" src="https://i1.sndcdn.com/artworks-EfwX4O5Coal6-0-t500x500.jpg" alt=""/>
       <div class="Mstart(10px)">
-        <div class="Fz(14px) C(#999999)">Lisa</div>
-        <Link to="/album/detail"><div class="Fz(14px)">Gurenge</div></Link>
+        <Link to="/artist/all" class="Td(n):h"><div class="Fz(14px) C(#999999)">Lisa</div></Link>
+        <Link to="/album/detail" class="C(black) C(black):h Td(n):h"><div class="Fz(14px)">Gurenge</div></Link>
         <div class="Fz(12px) C(#999999)">
           <span class="Mend(16px)">Album · 2019</span>
         </div>

@@ -85,7 +85,7 @@ export default class AlbumDetailPage extends React.Component {
 
           <div class="C(#999999) Fz(16px) Mt(30px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
             <span>Albums from this user</span>
-            <Link to="/artist/albums" class="Fl(end)">View all</Link>
+            <Link to="/artist/albums" class="Fl(end) C(#999999) C(#999999):h Td(n):h">View all</Link>
           </div>
           <AlbumSmall/>
           <AlbumSmall/>

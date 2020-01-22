@@ -5,6 +5,8 @@ import Navbar from './components/Navbar';
 import Homepage from './components/Homepage';
 import ArtistHomepage from './components/ArtistHomepage';
 import TrackDetailPage from './components/TrackDetailPage';
+import RegisterPage from './components/RegisterPage';
+import LoginPage from './components/LoginPage';
 
 import {Switch} from 'react-router-dom';
 import {ALL, POPULAR, TRACKS, ALBUMS} from './components/utils';
@@ -59,6 +61,8 @@ export default class App extends React.Component {
         <PropsRoute exact path="/artist/albums" component={ArtistHomepage} tab={ALBUMS} app={this}/>
         <PropsRoute exact path="/detail" component={TrackDetailPage} app={this}/>
         <PropsRoute exact path="/album/detail" component={AlbumDetailPage} app={this}/>
+        <PropsRoute exact path="/register" component={RegisterPage} app={this}/>
+        <PropsRoute exact path="/login" component={LoginPage} app={this}/>
 
       </Switch>
     </div>;
