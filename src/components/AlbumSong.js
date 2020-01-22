@@ -17,7 +17,7 @@ export default class AlbumSong extends React.Component {
           <img class="W(20px) H(20px) Mx(4px) Mb(4px)" src={Lisa} alt=""/>
           <Link to="/song/detail" class="Td(n):h C(black) Fz(14px) Mb(4px)"> Unlasting</Link>
         </span>
-        <span class="Fl(end) Fz(14px) Mend(8px) C(gray) Lh(30px)">
+        <span class="Fl(end) Fz(14px) Mend(8px) C(#999999) Lh(30px)">
           <i class="Cur(p) fas fa-play"></i>
           <span class="Mx(8px)">43</span>
         </span>

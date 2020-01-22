@@ -19,9 +19,9 @@ export default class Album extends React.Component {
                 <span class="Fz(14px)"><i class="fas fa-play"></i></span>
               </span>
               <div class="Mstart(10px)">
-                <Link to="/artist/all" class="D(b) Td(n):h Fz(14px) C(gray)">Lisa</Link>
+                <Link to="/artist/all" class="D(b) Td(n):h Fz(14px) C(#999999)">Lisa</Link>
                 <Link to="/detail" class="D(ib) Td(n):h C(black) Fz(16px)">Catch the moment</Link>
-                <span class="C(gray) Fz(14px) Mstart(4px)"> Album · 2019</span>
+                <span class="C(#999999) Fz(14px) Mstart(4px)"> Album · 2019</span>
               </div>
             </div>
             <div class="Fl(end)">
@@ -44,7 +44,7 @@ export default class Album extends React.Component {
                 <img class="W(20px) H(20px) Mx(4px) Mb(4px)" src={Lisa} alt=""/>
                 <span class="Fz(14px) Mb(4px)"> Unlasting</span>
               </span>
-              <span class="Fl(end) Fz(14px) Mend(8px) C(gray) Lh(30px)">
+              <span class="Fl(end) Fz(14px) Mend(8px) C(#999999) Lh(30px)">
                 <i class="Cur(p) fas fa-play"></i>
                 <span class="Mx(8px)">43</span>
               </span>

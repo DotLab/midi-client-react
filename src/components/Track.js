@@ -21,7 +21,7 @@ export default class Track extends React.Component {
                 <span class="Fz(14px)"><i class="fas fa-play"></i></span>
               </span>
               <div class="Mstart(10px)">
-                <Link to="/artist/all" class="D(b) Td(n):h Fz(14px) C(gray)">Lisa</Link>
+                <Link to="/artist/all" class="D(b) Td(n):h Fz(14px) C(#999999)">Lisa</Link>
                 <Link to="/detail" class="D(b) Td(n):h C(black) Fz(16px)">Catch the moment</Link>
               </div>
             </div>
