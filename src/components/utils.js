@@ -2,6 +2,8 @@ export const ALL = 'all';
 export const POPULAR = 'popular';
 export const TRACKS = 'tracks';
 export const ALBUMS = 'albums';
+export const LIKES = 'likes';
+export const FOLLOWING = 'following';
 
 export const ROUTE_NEW_THING = 'New thing';
 export const ROUTE_NEW_CUSTOMIZABLE = 'New customizable';

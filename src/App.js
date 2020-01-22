@@ -7,9 +7,10 @@ import ArtistHomepage from './components/ArtistHomepage';
 import TrackDetailPage from './components/TrackDetailPage';
 import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
+import ProfilePage from './components/ProfilePage';
 
 import {Switch} from 'react-router-dom';
-import {ALL, POPULAR, TRACKS, ALBUMS} from './components/utils';
+import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING} from './components/utils';
 import AlbumDetailPage from './components/AlbumDetailPage';
 import UploadPage from './components/UploadPage';
 
@@ -65,6 +66,12 @@ export default class App extends React.Component {
         <PropsRoute exact path="/register" component={RegisterPage} app={this}/>
         <PropsRoute exact path="/login" component={LoginPage} app={this}/>
         <PropsRoute exact path="/upload" component={UploadPage} app={this}/>
+        <PropsRoute exact path="/profile/all" component={ProfilePage} tab={ALL} app={this}/>
+        <PropsRoute exact path="/profile/popular" component={ProfilePage} tab={POPULAR} app={this}/>
+        <PropsRoute exact path="/profile/tracks" component={ProfilePage} tab={TRACKS} app={this}/>
+        <PropsRoute exact path="/profile/albums" component={ProfilePage} tab={ALBUMS} app={this}/>
+        <PropsRoute exact path="/profile/likes" component={ProfilePage} tab={LIKES} app={this}/>
+        <PropsRoute exact path="/profile/following" component={ProfilePage} tab={FOLLOWING} app={this}/>
 
       </Switch>
     </div>;

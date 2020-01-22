@@ -28,8 +28,8 @@ export default class Album extends React.Component {
                 6 months ago
             </div>
           </div>
-          <div class="Mt(10px) H(60px) Bds(s) ">
-              canvas
+          <div class="My(34px) Bdbs(s) Bdbw(1px) Bdbc(lightgray) H(20px)">
+            <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">0:29</span>
           </div>
           <table class="My(10px) table table-hover table-sm table-bordered">
             <tbody>
