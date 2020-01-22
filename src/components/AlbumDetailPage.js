@@ -1,11 +1,10 @@
 import React from 'react';
-import SongComment from './SongComment';
-import Comment from './Comment';
 import Lisa from './Lisa.jpg';
-import TrackSmall from './TrackSmall';
 import AlbumSmall from './AlbumSmall';
+import AlbumSong from './AlbumSong';
+import {Link} from 'react-router-dom';
 
-export default class TrackDetailPage extends React.Component {
+export default class AlbumDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.app = props.app;
@@ -27,11 +26,12 @@ export default class TrackDetailPage extends React.Component {
             </div>
             <span class="Fl(end)">6 months ago</span>
           </div>
-          <div class="Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(lightgray) H(26px)">
-            <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">0:29</span>
+          <div class="Mt(120px) H(100px) W(100px) bg-dark Bdrs(100%) D(f) Fxd(c) Jc(c) Ai(c)">
+            <span class="C(white) Fz(30px)">5</span>
+            <span class="C(white) Fz(14px) T(-2px)">TRACKS</span>
+            <span class="C(#999999) Fz(14px)">17:23</span>
           </div>
-          <SongComment/>
-          <SongComment/>
+
         </div>
         <div class="Mstart(30px) W(30%)">
           <img class="H(100%) W(100%) " src="https://i1.sndcdn.com/artworks-EfwX4O5Coal6-0-t500x500.jpg" alt=""/>
@@ -39,10 +39,6 @@ export default class TrackDetailPage extends React.Component {
       </div>
       <div class="D(f)">
         <div class="W(70%) Miw(700px) Pend(30px) Bdends(s) Bdendw(1px) Bdendc(#f2f2f2)">
-          <div class="H(40px) Bgc(#f2f2f2) D(f) Ai(c)">
-            <div class="D(ib) Mend(6px) H(100%) W(44px)" style={{background: 'linear-gradient(#956E53, #70929c)'}}></div>
-            <input class="H(28px) Bdc(t) Bdrs(4px) P(4px) W(100%) Mend(6px)" placeholder="Write a comment"/>
-          </div>
 
           <div class="D(f) Jc(sb) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) Ai(b) Pb(10px)">
             <div class="Mt(10px) D(f)">
@@ -56,7 +52,6 @@ export default class TrackDetailPage extends React.Component {
               </select>
             </div>
             <div>
-              <span class="Fz(14px) Mend(20px) C(#999999)"><i class="Fz(12px) Mend(2px) fas fa-play"></i> 34k</span>
               <span class="Fz(14px) C(#999999)"><i class="Mend(2px) fas fa-thumbs-up"></i> 34k</span>
             </div>
           </div>
@@ -70,47 +65,29 @@ export default class TrackDetailPage extends React.Component {
             </div>
             <div class="Mstart(20px) W(100%)">
               <div>
-                <div class="Fw(600) Fz(16px)">Released by:</div>
-                <div class="Fz(14px)">Sony music</div>
                 <div class="Mt(10px) Fw(600) Fz(16px)">Released date:</div>
                 <div class="Fz(14px)">3 July 2019</div>
-                <div class="Mt(14px) Fz(16px) C(#999999) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) Py(4px)">12 comments</div>
               </div>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
-              <Comment/>
+
+              <table class="Mt(20px) table table-sm">
+                <tbody>
+                  <AlbumSong/>
+                  <AlbumSong/>
+                  <AlbumSong/>
+                </tbody>
+              </table>
             </div>
           </div>
 
         </div>
 
         <div class="Px(30px) Miw(380px)">
-          <div class="C(#999999) Fz(16px) Py(4px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
-            <span>Related tracks</span>
-            <span class="Fl(end)">View all</span>
-          </div>
-          <TrackSmall/>
-          <TrackSmall/>
-          <TrackSmall/>
-          <TrackSmall/>
 
           <div class="C(#999999) Fz(16px) Mt(30px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
-            <span>In albums</span>
-            <span class="Fl(end)">View all</span>
+            <span>Albums from this user</span>
+            <Link to="/artist/albums" class="Fl(end)">View all</Link>
           </div>
+          <AlbumSmall/>
           <AlbumSmall/>
 
         </div>

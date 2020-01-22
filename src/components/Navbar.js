@@ -27,10 +27,10 @@ export default class Navbar extends React.Component {
     return <div>
       <div class="W(100%) H(60px) bg-dark D(f) Jc(sa)">
         <div class="Lh(60px) C(white)">
-          <span class="C(#ec84a2)">
+          <Link to="/" class="C(#ec84a2) C(#ec84a2):h Td(n):h">
             <span class="Fz(22px) Fw(600)">Scarletea</span>
             <span class="Mstart(8px) Fz(20px)">Midi</span>
-          </span>
+          </Link>
           <Link class="Mstart(20px) C(white) Fz(16px)" to="/">Home</Link>
           <Link class="Mstart(20px) C(white) Fz(16px)" to="/library">Library</Link>
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import AlbumSong from './AlbumSong';
+import AlbumSongSmall from './AlbumSongSmall';
 
 export default class Album extends React.Component {
   constructor(props) {
@@ -33,25 +33,12 @@ export default class Album extends React.Component {
           </div>
           <table class="My(10px) table table-hover table-sm table-bordered">
             <tbody>
-              <AlbumSong/>
-              <AlbumSong/>
-              <AlbumSong/>
+              <AlbumSongSmall/>
+              <AlbumSongSmall/>
+              <AlbumSongSmall/>
             </tbody>
           </table>
-          {/* <div class="My(10px)">
-            <div class="H(30px) Bds(s) Bdw(1px) Bdc(lightgray)">
-              <span>
-                <img class="W(20px) H(20px) Mx(4px) Mb(4px)" src={Lisa} alt=""/>
-                <span class="Fz(14px) Mb(4px)"> Unlasting</span>
-              </span>
-              <span class="Fl(end) Fz(14px) Mend(8px) C(#999999) Lh(30px)">
-                <i class="Cur(p) fas fa-play"></i>
-                <span class="Mx(8px)">43</span>
-              </span>
 
-            </div>
-          </div>
-         */}
           <div class="Mt(10px) D(f)">
             <span data-toggle="tooltip" title="like" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-thumbs-up"></i></span>
             <span data-toggle="tooltip" title="download" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-download"></i></span>

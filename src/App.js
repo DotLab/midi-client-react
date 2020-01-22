@@ -8,6 +8,7 @@ import TrackDetailPage from './components/TrackDetailPage';
 
 import {Switch} from 'react-router-dom';
 import {ALL, POPULAR, TRACKS, ALBUMS} from './components/utils';
+import AlbumDetailPage from './components/AlbumDetailPage';
 
 const API_SUCCESS = 'SUCCESS';
 const API_URL = 'http://localhost:3000';
@@ -57,6 +58,7 @@ export default class App extends React.Component {
         <PropsRoute exact path="/artist/tracks" component={ArtistHomepage} tab={TRACKS} app={this}/>
         <PropsRoute exact path="/artist/albums" component={ArtistHomepage} tab={ALBUMS} app={this}/>
         <PropsRoute exact path="/detail" component={TrackDetailPage} app={this}/>
+        <PropsRoute exact path="/album/detail" component={AlbumDetailPage} app={this}/>
 
       </Switch>
     </div>;

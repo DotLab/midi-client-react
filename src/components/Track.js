@@ -13,7 +13,7 @@ export default class Track extends React.Component {
   render() {
     return <div class="Mb(60px)">
       <div class="D(f)">
-        <Link to="/detail"><img class="W(160px) H(160px) shadow p-1 rounded" src="http://st.cdjapan.co.jp/pictures/l/05/32/SVWC-70233.jpg" alt=""/></Link>
+        <Link to="/detail"><img class="W(160px) H(160px) shadow p-1 rounded" src="http://st.cdjapan.co.jp/pictures/l/14/09/VVCL-1220.jpg" alt=""/></Link>
         <div class="W(100%) Mstart(20px)">
           <div class="D(f) Jc(sb)">
             <div class="D(f)">
@@ -29,8 +29,8 @@ export default class Track extends React.Component {
                 6 months ago
             </div>
           </div>
-          <div class="Mt(10px) H(60px) Bds(s) ">
-              canvas
+          <div class="My(34px) Bdbs(s) Bdbw(1px) Bdbc(lightgray) H(20px)">
+            <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">0:29</span>
           </div>
           <div class="Mt(10px) D(f)">
             <span data-toggle="tooltip" title="like" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-thumbs-up"></i></span>

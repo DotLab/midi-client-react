@@ -38,7 +38,7 @@ export default class ArtistHomepage extends React.Component {
       </div>
       <div class="D(f)">
         {tab === ALL && <div class="Pt(40px) W(70%) Miw(700px) Pend(20px) Bdends(s) Bdendc(#f2f2f2) Bdendw(1px)">
-          <span class="Fz(22px)">Recent</span>
+          <div class="Fz(22px) Mb(20px)">Recent</div>
           <Track/>
           <Track/>
           <Track/>
