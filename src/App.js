@@ -11,6 +11,7 @@ import LoginPage from './components/LoginPage';
 import {Switch} from 'react-router-dom';
 import {ALL, POPULAR, TRACKS, ALBUMS} from './components/utils';
 import AlbumDetailPage from './components/AlbumDetailPage';
+import UploadPage from './components/UploadPage';
 
 const API_SUCCESS = 'SUCCESS';
 const API_URL = 'http://localhost:3000';
@@ -63,6 +64,7 @@ export default class App extends React.Component {
         <PropsRoute exact path="/album/detail" component={AlbumDetailPage} app={this}/>
         <PropsRoute exact path="/register" component={RegisterPage} app={this}/>
         <PropsRoute exact path="/login" component={LoginPage} app={this}/>
+        <PropsRoute exact path="/upload" component={UploadPage} app={this}/>
 
       </Switch>
     </div>;
