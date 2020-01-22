@@ -39,8 +39,8 @@ export default class Navbar extends React.Component {
             </form>
           </span>
           <span>
-            <Link to="/login" class="Fz(16px) Mstart(20px) C(white) Td(n):h">Sign in</Link>
-            <Link to="/register" class="Bds(s) Bdw(t) Py(4px) Px(8px) Bdrs(4px) C(white):h Fz(16px) Mstart(20px) C(white) Td(n):h">Create account</Link>
+            <Link to="/login" class="Bds(s) Bdw(1px) Bdrs(4px) Py(4px) Px(8px) Fz(16px) Mstart(20px) C(white) Td(n):h">Sign in</Link>
+            <Link to="/register" class="Bgc(#e95689) Bdrs(4px) Py(4px) Px(8px) C(white):h Fz(16px) Mstart(20px) C(white) Td(n):h">Create account</Link>
           </span>
         </div>
       </div>

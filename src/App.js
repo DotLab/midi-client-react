@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from './components/Navbar';
 import Homepage from './components/Homepage';
 import ArtistHomepage from './components/ArtistHomepage';
+import TrackDetailPage from './components/TrackDetailPage';
 
 import {Switch} from 'react-router-dom';
 import {ALL, POPULAR, TRACKS, ALBUMS} from './components/utils';
@@ -55,6 +56,7 @@ export default class App extends React.Component {
         <PropsRoute exact path="/artist/popular" component={ArtistHomepage} tab={POPULAR} app={this}/>
         <PropsRoute exact path="/artist/tracks" component={ArtistHomepage} tab={TRACKS} app={this}/>
         <PropsRoute exact path="/artist/albums" component={ArtistHomepage} tab={ALBUMS} app={this}/>
+        <PropsRoute exact path="/detail" component={TrackDetailPage} app={this}/>
 
       </Switch>
     </div>;

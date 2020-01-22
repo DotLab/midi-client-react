@@ -21,7 +21,7 @@ export default class ArtistHomepage extends React.Component {
           <div class="Pos(a) Pt(120px)">
             <div class="Fz(50px) Px(20px) Fw(b) C(white)">Lisa</div>
             <div>
-              <button class="btn btn-success W(90px) Px(20px) Mx(20px)">Play</button>
+              <button class="btn Bgc(#e95689) C(white) W(90px) Px(20px) Mx(20px)">Play</button>
               <button class="btn btn-secondary W(90px) Px(20px) Mx(20px) My(20px)">Follow</button>
             </div>
           </div>
@@ -31,10 +31,10 @@ export default class ArtistHomepage extends React.Component {
 
       </div>
       <div class="Fw(b) W(100%) Py(8px) Bdbs(s) Bdbw(1px) Bdbc(lightgray)">
-        <Link to="/artist/all" class={'Pend(20px) Cur(p) Td(n):h Py(9px) Bdbc(black):h Bdbs(s):h Bdbw(2px) ' + (tab === ALL ? 'C(black) Bdbs(s)' : 'C(gray)')}>All</Link>
-        <Link to="/artist/popular" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc(black):h Bdbs(s):h Bdbw(2px) ' + (tab === POPULAR ? 'C(black) Bdbs(s)' : 'C(gray)')}>Popular tracks</Link>
-        <Link to="/artist/tracks" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc(black):h Bdbs(s):h Bdbw(2px) ' + (tab === TRACKS ? 'C(black) Bdbs(s)' : 'C(gray)')}>Tracks</Link>
-        <Link to="/artist/albums" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc(black):h Bdbs(s):h Bdbw(2px) ' + (tab === ALBUMS ? 'C(black) Bdbs(s)' : 'C(gray)')}>Albums</Link>
+        <Link to="/artist/all" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc(#e95689):h C(#e95689):h  Bdbs(s):h Bdbw(2px) ' + (tab === ALL ? 'C(#e95689) Bdbs(s)' : 'C(gray)')}>All</Link>
+        <Link to="/artist/popular" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc(#e95689):h C(#e95689):h  Bdbs(s):h Bdbw(2px) ' + (tab === POPULAR ? 'C(#e95689) Bdbs(s)' : 'C(gray)')}>Popular tracks</Link>
+        <Link to="/artist/tracks" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc(#e95689):h C(#e95689):h  Bdbs(s):h Bdbw(2px) ' + (tab === TRACKS ? 'C(#e95689) Bdbs(s)' : 'C(gray)')}>Tracks</Link>
+        <Link to="/artist/albums" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc(#e95689):h C(#e95689):h  Bdbs(s):h Bdbw(2px) ' + (tab === ALBUMS ? 'C(#e95689) Bdbs(s)' : 'C(gray)')}>Albums</Link>
       </div>
       <div class="D(f)">
         {tab === ALL && <div class="Pt(40px) W(70%) Pend(20px) Bdends(s) Bdendc(lightgray) Bdendw(1px)">
