@@ -27,7 +27,7 @@ export default class Navbar extends React.Component {
     return <div>
       <div class="W(100%) H(60px) bg-dark D(f) Jc(sa)">
         <div class="Lh(60px) C(white)">
-          <span class="C(#e95689)">
+          <span class="C(#ec84a2)">
             <span class="Fz(22px) Fw(600)">Scarletea</span>
             <span class="Mstart(8px) Fz(20px)">Midi</span>
           </span>
@@ -42,7 +42,7 @@ export default class Navbar extends React.Component {
           </span>
           <span>
             <Link to="/login" class="Bds(s) Bdw(1px) Bdrs(4px) Py(4px) Px(8px) Fz(16px) Mstart(20px) C(white) Td(n):h">Sign in</Link>
-            <Link to="/register" class="Bgc(#e95689) Bdrs(4px) Py(4px) Px(8px) C(white):h Fz(16px) Mstart(20px) C(white) Td(n):h">Create account</Link>
+            <Link to="/register" class="Bgc(#ec84a2) Bdrs(4px) Py(4px) Px(8px) C(white):h Fz(16px) Mstart(20px) C(white) Td(n):h">Create account</Link>
           </span>
         </div>
       </div>

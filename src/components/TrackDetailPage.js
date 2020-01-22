@@ -2,6 +2,8 @@ import React from 'react';
 import SongComment from './SongComment';
 import Comment from './Comment';
 import Lisa from './Lisa.jpg';
+import TrackSmall from './TrackSmall';
+import AlbumSmall from './AlbumSmall';
 
 export default class TrackDetailPage extends React.Component {
   constructor(props) {
@@ -11,11 +13,11 @@ export default class TrackDetailPage extends React.Component {
 
   render() {
     return <div class="W(80%) Mx(a)">
-      <div class="D(f) P(20px) My(20px)" style={{background: 'linear-gradient(#FdAB9F, #70929c, transparent)'}}>
+      <div class="D(f) P(20px) My(20px)" style={{background: 'linear-gradient(#FFBABA, #70929c, transparent)'}}>
         <div class="W(70%)">
           <div class="D(f) Jc(sb)">
             <div class="D(f)">
-              <span class="C(white) W(50px) H(50px) D(f) Jc(c) Ai(c) P(4px) Bgc(black) Bdrs(100%)">
+              <span class="C(white) W(50px) H(50px) D(f) Jc(c) Ai(c) P(4px) bg-dark Bdrs(100%)">
                 <i class="fas fa-play"></i>
               </span>
               <div class="Mx(20px)">
@@ -38,7 +40,7 @@ export default class TrackDetailPage extends React.Component {
       <div class="D(f)">
         <div class="W(70%) Miw(700px) Pend(30px) Bdends(s) Bdendw(1px) Bdendc(#f2f2f2)">
           <div class="H(40px) Bgc(#f2f2f2) D(f) Ai(c)">
-            <div class="D(ib) Mend(6px) H(100%) W(44px)" style={{background: 'linear-gradient(#e95689, #f9aac6)'}}></div>
+            <div class="D(ib) Mend(6px) H(100%) W(44px)" style={{background: 'linear-gradient(#846170, #70929c)'}}></div>
             <input class="H(28px) Bdc(t) Bdrs(4px) P(4px) W(100%) Mend(6px)" placeholder="Write a comment"/>
           </div>
 
@@ -64,7 +66,7 @@ export default class TrackDetailPage extends React.Component {
               <div class="Mt(10px)">Lisa</div>
               <span data-toggle="tooltip" title="338 followers" class="Mend(10px) Fz(14px) C(#999999)"><i class="fas fa-user-friends"></i> 388</span>
               <span data-toggle="tooltip" title="338 tracks" class="Mend(10px) Fz(14px) C(#999999)"><i class="fas fa-list"></i> 388</span>
-              <button class="D(b) Bdc(t) Bdrs(4px) Px(8px) Bgc(#e95689) C(white) Fz(14px) Mt(10px) H(28px)">Follow</button>
+              <button class="D(b) Bdc(t) Bdrs(4px) Px(8px) Bgc(#ec84a2) C(white) Fz(14px) Mt(10px) H(28px)">Follow</button>
             </div>
             <div class="Mstart(20px) W(100%)">
               <div>
@@ -84,28 +86,33 @@ export default class TrackDetailPage extends React.Component {
               <Comment/>
               <Comment/>
               <Comment/>
+              <Comment/>
+              <Comment/>
+              <Comment/>
+              <Comment/>
+              <Comment/>
+              <Comment/>
             </div>
           </div>
 
         </div>
 
-        <div class="Px(30px) Miw(400px)">
+        <div class="Px(30px) Miw(380px)">
           <div class="C(#999999) Fz(16px) Py(4px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
             <span>Related tracks</span>
             <span class="Fl(end)">View all</span>
           </div>
-          <div class="D(f) Mt(20px)">
-            <img class="H(50px) W(50px)" src="https://beatsaver.com/cdn/3dbb/5c9ec42e4868d3f4cd18c0c23ada5dbcc558d402.jpg" alt=""/>
-            <div class="Mstart(10px)">
-              <div class="Fz(14px) C(#999999)">Alu Kawaii</div>
-              <div class="Fz(14px)">Love is War OP Full</div>
-              <div class="Fz(12px) C(#999999)">
-                <span class="Mend(12px)"><i class="Mend(2px) Fz(10px) fas fa-play"></i> 52.6k</span>
-                <span class="Mend(12px)"><i class="Mend(2px) fas fa-thumbs-up"></i> 52.6k</span>
-                <span class="Mend(12px)"><i class="Mend(2px) fas fa-comment"></i> 13</span>
-              </div>
-            </div>
+          <TrackSmall/>
+          <TrackSmall/>
+          <TrackSmall/>
+          <TrackSmall/>
+
+          <div class="C(#999999) Fz(16px) Mt(30px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
+            <span>In albums</span>
+            <span class="Fl(end)">View all</span>
           </div>
+          <AlbumSmall/>
+
         </div>
       </div>
 
