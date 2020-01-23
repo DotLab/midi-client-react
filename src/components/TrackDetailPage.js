@@ -5,6 +5,7 @@ import Lisa from './Lisa.jpg';
 import TrackSmall from './TrackSmall';
 import AlbumSmall from './AlbumSmall';
 import {Link} from 'react-router-dom';
+import TrackPanel from './TrackPanel';
 
 export default class TrackDetailPage extends React.Component {
   constructor(props) {
@@ -60,16 +61,7 @@ export default class TrackDetailPage extends React.Component {
           </div>
 
           <div class="D(f) Jc(sb) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) Ai(b) Pb(10px)">
-            <div class="Mt(10px) D(f)">
-              <span data-toggle="tooltip" title="like" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-heart"></i></span>
-              <span data-toggle="tooltip" title="download" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-download"></i></span>
-              <span class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p) Pos(r)"><i class="fas fa-plus"></i></span>
-              <select class="Pos(a) W(24px) H(24px) Op(0) Mstart(74px)" defaultValue="disabled">
-                <option value="disabled" class="D(n)" disabled>---</option>
-                <option>Add to playlist </option>
-                <option>Add to collection </option>
-              </select>
-            </div>
+            <TrackPanel/>
             <div>
               <span class="Fz(14px) Mend(20px) C(#999999)"><i class="Fz(12px) Mend(2px) fas fa-play"></i> 34k</span>
               <span class="Fz(14px) C(#999999)"><i class="Mend(2px) fas fa-heart"></i> 34k</span>

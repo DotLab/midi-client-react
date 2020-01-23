@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import AlbumSongSmall from './AlbumSongSmall';
+import AlbumTrackSmall from './AlbumTrackSmall';
+import TrackPanel from './TrackPanel';
 
 export default class Album extends React.Component {
   constructor(props) {
@@ -33,22 +34,13 @@ export default class Album extends React.Component {
           </div>
           <table class="My(10px) table table-hover table-sm table-bordered">
             <tbody>
-              <AlbumSongSmall/>
-              <AlbumSongSmall/>
-              <AlbumSongSmall/>
+              <AlbumTrackSmall/>
+              <AlbumTrackSmall/>
+              <AlbumTrackSmall/>
             </tbody>
           </table>
 
-          <div class="Mt(10px) D(f)">
-            <span data-toggle="tooltip" title="like" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-heart"></i></span>
-            <span data-toggle="tooltip" title="download" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-download"></i></span>
-            <span class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p) Pos(r)"><i class="fas fa-plus"></i></span>
-            <select class="Pos(a) W(24px) H(24px) Op(0) Mstart(74px)" defaultValue="disabled">
-              <option value="disabled" class="D(n)" disabled>---</option>
-              <option>Add to playlist </option>
-              <option>Add to collection </option>
-            </select>
-          </div>
+          <TrackPanel/>
         </div>
       </div>
     </div>;

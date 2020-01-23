@@ -14,6 +14,7 @@ import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING, FOLLOWER} from './compon
 import AlbumDetailPage from './components/AlbumDetailPage';
 import UploadPage from './components/UploadPage';
 import LibraryPage from './components/LibraryPage';
+import EditPage from './components/EditPage';
 
 const API_SUCCESS = 'SUCCESS';
 const API_URL = 'http://localhost:3000';
@@ -119,6 +120,8 @@ export default class App extends React.Component {
         <PropsRoute exact path="/library/albums" component={LibraryPage} tab={ALBUMS} app={this}/>
         <PropsRoute exact path="/library/following" component={LibraryPage} tab={FOLLOWING} app={this}/>
         <PropsRoute exact path="/library/follower" component={LibraryPage} tab={FOLLOWER} app={this}/>
+        <PropsRoute exact path="/album/edit" component={EditPage} type={ALBUMS} app={this}/>
+        <PropsRoute exact path="/track/edit" component={EditPage} type={TRACKS} app={this}/>
 
       </Switch>
     </div>;

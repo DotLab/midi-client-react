@@ -1,8 +1,9 @@
 import React from 'react';
 import Lisa from './Lisa.jpg';
 import AlbumSmall from './AlbumSmall';
-import AlbumSong from './AlbumSong';
+import AlbumTrack from './AlbumTrack';
 import {Link} from 'react-router-dom';
+import AlbumPanel from './AlbumPanel';
 
 export default class AlbumDetailPage extends React.Component {
   constructor(props) {
@@ -41,16 +42,7 @@ export default class AlbumDetailPage extends React.Component {
         <div class="W(70%) Miw(700px) Pend(30px) Bdends(s) Bdendw(1px) Bdendc(#f2f2f2)">
 
           <div class="D(f) Jc(sb) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) Ai(b) Pb(10px)">
-            <div class="Mt(10px) D(f)">
-              <span data-toggle="tooltip" title="like" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-heart"></i></span>
-              <span data-toggle="tooltip" title="download" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-download"></i></span>
-              <span class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p) Pos(r)"><i class="fas fa-plus"></i></span>
-              <select class="Pos(a) W(24px) H(24px) Op(0) Mstart(74px)" defaultValue="disabled">
-                <option value="disabled" class="D(n)" disabled>---</option>
-                <option>Add to playlist </option>
-                <option>Add to collection </option>
-              </select>
-            </div>
+            <AlbumPanel/>
             <div>
               <span class="Fz(14px) C(#999999)"><i class="Mend(2px) fas fa-heart"></i> 34k</span>
             </div>
@@ -71,9 +63,9 @@ export default class AlbumDetailPage extends React.Component {
 
               <table class="Mt(20px) table table-sm">
                 <tbody>
-                  <AlbumSong/>
-                  <AlbumSong/>
-                  <AlbumSong/>
+                  <AlbumTrack/>
+                  <AlbumTrack/>
+                  <AlbumTrack/>
                 </tbody>
               </table>
             </div>

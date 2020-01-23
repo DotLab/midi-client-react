@@ -5,6 +5,7 @@ export const ALBUMS = 'albums';
 export const LIKES = 'likes';
 export const FOLLOWING = 'following';
 export const FOLLOWER = 'follower';
+export const BASIC = 'basic';
 
 export const ROUTE_NEW_THING = 'New thing';
 export const ROUTE_NEW_CUSTOMIZABLE = 'New customizable';

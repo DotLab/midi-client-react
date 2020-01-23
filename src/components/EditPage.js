@@ -1,9 +1,11 @@
 import React from 'react';
+import {ALBUMS, BASIC, TRACKS} from './utils';
+import EditAlbumTrack from './EditAlbumTrack';
 const MAX_SIZE = 31457280;
 const INPUT_STYLE = 'W(100%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)';
 
 
-export default class UploadPage extends React.Component {
+export default class EditPage extends React.Component {
   constructor(props) {
     super(props);
     this.app = props.app;
@@ -15,6 +17,7 @@ export default class UploadPage extends React.Component {
       fileSizes: [],
 
       pictureUrl: 'a',
+      tab: TRACKS,
     };
     this.onFileChange = this.onFileChange.bind(this);
   }
@@ -48,26 +51,17 @@ export default class UploadPage extends React.Component {
   }
 
   render() {
-    const {buffers, pictureUrl} = this.state;
-    return <div class="W(80%) Mx(a) My(80px) Miw(800px)">
-      {!buffers.length && <div class=" D(ib) W(100%) Miw(600px) Ta(c) H(400px) shadow p-2 round">
-        <div class="Py(80px)">
-          <label class="Fz(22px)">Upload your tracks and albums here</label>
-          <div class="Fz(12px) Pstart(40px) My(20px) Pos(r)">
-            <input class="Cur(p) Pos(a) Op(0) W(300px) H(40px)"
-              key={this.state.inputKey} multiple type="file" name="file"
-              accept=".WAV, .FLAC, .AIFF, .ALAC, .OGG, .MP2, .MP3, .AAC, .AMR, .WMA"
-              onChange={this.onFileChange}/>
-            <button class="Bgc($pink) Miw(300px) Fz(20px) C(white) Bdc(t) Bdrs(4px) Py(10px)">Choose files to upload</button>
-          </div>
-          <div class="Mt(140px) Fz(16px)">
-          Provide FLAC, WAV, ALAC, or AIFF for highest audio quality.
-          </div>
-        </div>
-      </div>}
+    const {type} = this.props;
+    const {pictureUrl, tab} = this.state;
 
-      {buffers.length !== 0 && <div class="shadow p-2 round">
-        <div class="D(f) P(20px) Pos(r)">
+    return <div class="W(80%) Mx(a) My(80px) Miw(800px) Py(10px)">
+      <div class="shadow p-2 round">
+        {type === ALBUMS && <div class="Fw(b) Mx(20px) My(20px) Py(8px) Px(20px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
+          <span onClick={() => this.setState({tab: BASIC})} class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc($pink):h C($pink):h  Bdbs(s):h Bdbw(2px) ' + (tab === BASIC ? 'C($pink) Bdbs(s)' : 'C(gray)')}>Basic</span>
+          <span onClick={() => this.setState({tab: TRACKS})} class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc($pink):h C($pink):h  Bdbs(s):h Bdbw(2px) ' + (tab === TRACKS ? 'C($pink) Bdbs(s)' : 'C(gray)')}>Tracks</span>
+        </div>}
+
+        {(type === TRACKS || tab === BASIC) && <div class="D(f) Px(20px) Py(10px) Pos(r)">
           {!pictureUrl && <div class="H(260px) W(260px)" style={{background: 'linear-gradient(135deg, #956E53, #70929c)'}} ></div>}
           <button class="Pos(a) Mt(200px) Mstart(40px) Px(8px) Bdrs(4px) Bdc(t)"><i class="Mend(4px) fas fa-camera"></i> Upload image</button>
           {pictureUrl && <img class="H(260px) W(260px)" src="https://avatarfiles.alphacoders.com/144/144488.jpg" alt=""/>}
@@ -78,14 +72,14 @@ export default class UploadPage extends React.Component {
               <input class={INPUT_STYLE} placeholder="Name your track"/>
             </div>
 
-            <div class="Mt($m-control)">
+            {type === ALBUMS && <div class="Mt($m-control)">
               <div class="Fz(14px) Fw(600) Mb(4px)">Playlist type</div>
               <select class="W(50%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" defaultValue="invalid">
                 <option>Album</option>
                 <option>EP</option>
                 <option>Single</option>
               </select>
-            </div>
+            </div>}
 
             <div class="Mt($m-control)">
               <div class="Fz(14px) Fw(600) Mb(4px)">Genre</div>
@@ -122,7 +116,6 @@ export default class UploadPage extends React.Component {
                 <option value={'Triphop'}>Triphop</option>
                 <option value={'World'}>World</option>
               </select>
-
             </div>
 
             <div class="Mt($m-control)">
@@ -142,12 +135,23 @@ export default class UploadPage extends React.Component {
 
             <div class="Mt(10px) Fl(end)">
               <span class="Fz(16px) Mx(20px) Cur(p)" onClick={() => this.setState({buffers: [], fileNames: [], fileSizes: []})}>Cancel</span>
-              <button class="Bdc(t) Bdrs(4px) Px(8px) Bgc($pink) C(white) Fz(14px) Mt(10px) H(28px)">Save</button>
+              <button class="Bdc(t) Bdrs(4px) Px(8px) Bgc($pink) C(white) Fz(14px) Mt(10px) H(28px)">Save changes</button>
             </div>
           </div>
 
-        </div>
-      </div>}
+        </div>}
+
+        {(type === ALBUMS && tab === TRACKS) && <div class="Px(20px) Py(10px)">
+          <table class="My(10px) table table-sm table-bordered">
+            <tbody>
+              <EditAlbumTrack/>
+              <EditAlbumTrack/>
+              <EditAlbumTrack/>
+            </tbody>
+          </table>
+
+        </div>}
+      </div>
     </div>;
   }
 }

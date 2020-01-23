@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 
-export default class AlbumSongSmall extends React.Component {
+export default class AlbumTrackSmall extends React.Component {
   constructor(props) {
     super(props);
     this.app = props.app;
