@@ -63,7 +63,7 @@ export default class Register extends React.Component {
               <span class="Fz(14px) Fw(b)">Password confirmation *</span>
               <input class={INPUT_STYLE} type="password" name="passwordConfirm" onChange={this.onChange} required/>
             </div>
-            <button class="C(white) D(b) W(100%) Bgc(#ec84a2) Py(4px) Mt($m-control) Bdrs($bdrs-control) Bdc(t)" disabled={!this.checkPasswordMatch()} onClick={this.register}>Register</button>
+            <button class="C(white) D(b) W(100%) Bgc($pink) Py(4px) Mt($m-control) Bdrs($bdrs-control) Bdc(t)" disabled={!this.checkPasswordMatch()} onClick={this.register}>Register</button>
           </form>
 
         </div>

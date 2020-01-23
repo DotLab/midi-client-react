@@ -10,9 +10,10 @@ import LoginPage from './components/LoginPage';
 import ProfilePage from './components/ProfilePage';
 
 import {Switch} from 'react-router-dom';
-import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING} from './components/utils';
+import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING, FOLLOWER} from './components/utils';
 import AlbumDetailPage from './components/AlbumDetailPage';
 import UploadPage from './components/UploadPage';
+import LibraryPage from './components/LibraryPage';
 
 const API_SUCCESS = 'SUCCESS';
 const API_URL = 'http://localhost:3000';
@@ -52,6 +53,48 @@ export default class App extends React.Component {
     });
   }
 
+
+  async userLogin({email, password}) {
+    const res = await this.genericApi1('/v1/users/login', {email, password});
+    const token = res.payload;
+
+    localStorage.setItem('token', token);
+    this.setState({token});
+    this.userName({token});
+    if (this.state.currentUrl) {
+      this.history.push(this.state.currentUrl);
+    } else {
+      this.history.push('/');
+      this.setState({currentUrl: null});
+    }
+  }
+
+  saveUrl(currentUrl) {
+    this.setState({currentUrl});
+  }
+
+  async userName({token}) {
+    const res = await this.genericApi1('/v1/users/get-user', {token});
+    this.setState({user: res.payload});
+  }
+
+  async userLogOut() {
+    localStorage.removeItem('token');
+    this.setState({token: null});
+    this.history.push('/');
+  }
+
+  async userRegister({userName, email, displayName, password}) {
+    await this.genericApi1('/v1/users/register', {email, userName, displayName, password});
+    this.history.push('/login');
+  }
+
+  async userChangePassword({oldPassword, newPassword, token}) {
+    await this.genericApi1('/v1/users/settings/changepassword', {token, oldPassword, newPassword});
+    this.history.push('/login');
+  }
+
+
   render() {
     return <div>
       <PropsRoute path="/" component={Navbar} app={this}/>
@@ -72,6 +115,10 @@ export default class App extends React.Component {
         <PropsRoute exact path="/profile/albums" component={ProfilePage} tab={ALBUMS} app={this}/>
         <PropsRoute exact path="/profile/likes" component={ProfilePage} tab={LIKES} app={this}/>
         <PropsRoute exact path="/profile/following" component={ProfilePage} tab={FOLLOWING} app={this}/>
+        <PropsRoute exact path="/library/likes" component={LibraryPage} tab={LIKES} app={this}/>
+        <PropsRoute exact path="/library/albums" component={LibraryPage} tab={ALBUMS} app={this}/>
+        <PropsRoute exact path="/library/following" component={LibraryPage} tab={FOLLOWING} app={this}/>
+        <PropsRoute exact path="/library/follower" component={LibraryPage} tab={FOLLOWER} app={this}/>
 
       </Switch>
     </div>;

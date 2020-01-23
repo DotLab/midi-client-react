@@ -46,7 +46,7 @@ export default class TrackDetailPage extends React.Component {
 
           <div class="D(f) Jc(sb) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) Ai(b) Pb(10px)">
             <div class="Mt(10px) D(f)">
-              <span data-toggle="tooltip" title="like" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-thumbs-up"></i></span>
+              <span data-toggle="tooltip" title="like" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-heart"></i></span>
               <span data-toggle="tooltip" title="download" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-download"></i></span>
               <span class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Fz(12px) Py(2px) Bdrs(4px) Mend(6px) Cur(p) Pos(r)"><i class="fas fa-plus"></i></span>
               <select class="Pos(a) W(24px) H(24px) Op(0) Mstart(74px)" defaultValue="disabled">
@@ -57,7 +57,7 @@ export default class TrackDetailPage extends React.Component {
             </div>
             <div>
               <span class="Fz(14px) Mend(20px) C(#999999)"><i class="Fz(12px) Mend(2px) fas fa-play"></i> 34k</span>
-              <span class="Fz(14px) C(#999999)"><i class="Mend(2px) fas fa-thumbs-up"></i> 34k</span>
+              <span class="Fz(14px) C(#999999)"><i class="Mend(2px) fas fa-heart"></i> 34k</span>
             </div>
           </div>
           <div class="D(f) Mt(20px)">
@@ -66,7 +66,7 @@ export default class TrackDetailPage extends React.Component {
               <div class="Mt(10px)">Lisa</div>
               <span data-toggle="tooltip" title="338 followers" class="Mend(10px) Fz(14px) C(#999999)"><i class="fas fa-user-friends"></i> 388</span>
               <span data-toggle="tooltip" title="338 tracks" class="Mend(10px) Fz(14px) C(#999999)"><i class="fas fa-list"></i> 388</span>
-              <button class="D(b) Bdc(t) Bdrs(4px) Px(8px) Bgc(#ec84a2) C(white) Fz(14px) Mt(10px) H(28px)">Follow</button>
+              <button class="D(b) Bdc(t) Bdrs(4px) Px(8px) Bgc($pink) C(white) Fz(14px) Mt(10px) H(28px)">Follow</button>
             </div>
             <div class="Mstart(20px) W(100%)">
               <div>

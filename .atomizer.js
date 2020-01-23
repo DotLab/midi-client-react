@@ -22,7 +22,7 @@ module.exports = {
         '$blue':    '#007bff',
         '$indigo':  '#6610f2',
         '$purple':  '#6f42c1',
-        '$pink':    '#e83e8c',
+        '$pink':    '#ec84a2',
         '$red':     '#dc3545',
         '$orange':  '#fd7e14',
         '$yellow':  '#ffc107',

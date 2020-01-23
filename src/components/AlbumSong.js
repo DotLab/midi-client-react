@@ -30,7 +30,7 @@ export default class AlbumSong extends React.Component {
           {!playing && <span class="Fz(22px) Mstart(2px)"><i class="fas fa-play-circle"></i></span>}
           {playing && <span class="Fz(22px) Mstart(2px)"><i class="fas fa-pause-circle"></i></span>}
           <span class="D(f) Fl(end) Mend(10px) H(30px) Ai(c) Mt(2px)">
-            <span data-toggle="tooltip" title="like" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Py(2px) Fz(12px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-thumbs-up"></i></span>
+            <span data-toggle="tooltip" title="like" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Py(2px) Fz(12px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-heart"></i></span>
             <span data-toggle="tooltip" title="download" class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Py(2px) Fz(12px) Bdrs(4px) Mend(6px) Cur(p)"><i class="fas fa-download"></i></span>
             <span class="Bds(s) Bdw(1px) Bdc(lightgray) Px(8px) Py(2px) Fz(12px) Bdrs(4px) Mend(6px) Cur(p) Pos(r)"><i class="fas fa-plus"></i></span>
             <select class="Pos(a) W(24px) H(24px) Op(0) Mstart(74px)" defaultValue="disabled">

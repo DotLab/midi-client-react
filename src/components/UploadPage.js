@@ -58,7 +58,7 @@ export default class UploadPage extends React.Component {
               key={this.state.inputKey} multiple type="file" name="file"
               accept=".WAV, .FLAC, .AIFF, .ALAC, .OGG, .MP2, .MP3, .AAC, .AMR, .WMA"
               onChange={this.onFileChange}/>
-            <button class="Bgc(#ec84a2) Miw(300px) Fz(20px) C(white) Bdc(t) Bdrs(4px) Py(10px)">Choose files to upload</button>
+            <button class="Bgc($pink) Miw(300px) Fz(20px) C(white) Bdc(t) Bdrs(4px) Py(10px)">Choose files to upload</button>
           </div>
           <div class="Mt(140px) Fz(16px)">
           Provide FLAC, WAV, ALAC, or AIFF for highest audio quality.
@@ -95,7 +95,7 @@ export default class UploadPage extends React.Component {
 
             <div class="Mt(10px) Fl(end)">
               <span class="Fz(16px) Mx(20px) Cur(p)" onClick={() => this.setState({buffers: [], fileNames: [], fileSizes: []})}>Cancel</span>
-              <button class="Bdc(t) Bdrs(4px) Px(8px) Bgc(#ec84a2) C(white) Fz(14px) Mt(10px) H(28px)">Save</button>
+              <button class="Bdc(t) Bdrs(4px) Px(8px) Bgc($pink) C(white) Fz(14px) Mt(10px) H(28px)">Save</button>
             </div>
           </div>
 

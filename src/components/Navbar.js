@@ -24,9 +24,12 @@ export default class Navbar extends React.Component {
   }
 
   render() {
-    const loggedIn = true;
-    const avatarUrl = '';
     const {collapsed} = this.state;
+    const loggedIn = this.app.state.token;
+    let avatarUrl = '';
+    if (this.app.state.user) {
+      avatarUrl = this.app.state.user.avatarUrl;
+    }
 
     return <div>
       <div class="W(100%) H(60px) bg-dark D(f) Jc(sa)">
@@ -35,8 +38,8 @@ export default class Navbar extends React.Component {
             <span class="Fz(22px) Fw(600)">Scarletea</span>
             <span class="Mstart(8px) Fz(20px)">Midi</span>
           </Link>
-          <Link class="Mstart(20px) Td(n):h C(white) Fz(16px)" to="/">Home</Link>
-          <Link class="Mstart(20px) Td(n):h C(white) Fz(16px)" to="/library">Library</Link>
+          <Link class="Mstart(20px) Td(n):h C(white) C($pink):h Fz(16px)" to="/">Home</Link>
+          <Link class="Mstart(20px) Td(n):h C(white) C($pink):h Fz(16px)" to="/library/likes">Library</Link>
         </div>
         <div>
           <span class="Lh(60px) D(ib)">
@@ -45,8 +48,9 @@ export default class Navbar extends React.Component {
             </form>
           </span>
           {!loggedIn && <span>
-            <Link to="/login" class="Bds(s) Bdw(1px) Bdrs(4px) Py(4px) Px(8px) Fz(16px) Mstart(20px) C(white) Td(n):h">Sign in</Link>
-            <Link to="/register" class="Bgc(#ec84a2) Bdrs(4px) Py(4px) Px(8px) C(white):h Fz(16px) Mstart(20px) C(white) Td(n):h">Create account</Link>
+            <Link to="/login" class="Bds(s) Bdw(1px) Bdrs(4px) Py(4px) Px(8px) Fz(16px) Mstart(20px) C(white) C($pink):h Td(n):h">Sign in</Link>
+            {/* <Link to="/register" class="Bgc(#ec84a2) Bdrs(4px) Py(5px) Px(8px) C(white):h Fz(16px) Mstart(20px) C(white) Td(n):h">Create account</Link> */}
+            <Link to="/register" class="Bds(s) Bdw(1px) Bdrs(4px) Py(4px) Px(8px) C($pink):h Fz(16px) Mstart(20px) C($pink) Td(n):h">Create account</Link>
           </span>}
           {loggedIn && <div class="D(ib) Pos(r)">
             <div>

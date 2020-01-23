@@ -41,14 +41,14 @@ export default class Login extends React.Component {
             </div>
             <div class="Mt($m-control)">
               <span class="Fz(14px) Fw(b)">Password</span>
-              <Link to="/password-reset" class="Fl(end) Fz(12px) Fw(b) C(#ec84a2)">Forgot password?</Link>
+              <Link to="/password-reset" class="Fl(end) Fz(12px) Fw(b) C($pink)">Forgot password?</Link>
               <input class={INPUT_STYLE} placeholder="Password" type="password" name="password" onChange={this.onChange} required/>
             </div>
-            <button class="C(white) D(b) W(100%) Bgc(#ec84a2) Py(4px) Mt($m-control) Bdrs($bdrs-control) Bdc(t)" onClick={this.login}>SIGN IN</button>
+            <button class="C(white) D(b) W(100%) Bgc($pink) Py(4px) Mt($m-control) Bdrs($bdrs-control) Bdc(t)" onClick={this.login}>SIGN IN</button>
           </form>
 
           <div class="Fz(12px) Ta(c)">
-            New to Scarletea Midi? <Link to="/register" class="C(#ec84a2) C(#ec84a2):h Td(n):h">Create an account.</Link>
+            New to Scarletea Midi? <Link to="/register" class="C($pink) C($pink):h Td(n):h">Create an account.</Link>
           </div>
         </div>
       </div>

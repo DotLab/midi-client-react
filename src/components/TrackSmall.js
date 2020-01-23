@@ -15,7 +15,7 @@ export default class TrackSmall extends React.Component {
         <Link to="/detail" class="Td(n):h"><div class="Fz(14px) C(black)">Love is War OP Full - Love Dramatic</div></Link>
         <div class="Fz(12px) C(#999999)">
           <span class="Mend(16px)"><i class="Mend(4px) Fz(10px) fas fa-play"></i> 52.6k</span>
-          <span class="Mend(16px)"><i class="Mend(4px) fas fa-thumbs-up"></i> 52.6k</span>
+          <span class="Mend(16px)"><i class="Mend(4px) fas fa-heart"></i> 52.6k</span>
           <span class="Mend(16px)"><i class="Mend(4px) fas fa-comment"></i> 13</span>
         </div>
       </div>
