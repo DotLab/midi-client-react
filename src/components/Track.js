@@ -30,7 +30,7 @@ export default class Track extends React.Component {
                 6 months ago
             </div>
           </div>
-          <div class="My(34px) Bdbs(s) Bdbw(1px) Bdbc(lightgray) H(20px)">
+          <div class="My(34px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) H(20px)">
             <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">0:29</span>
           </div>
           <TrackPanel/>

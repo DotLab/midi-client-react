@@ -15,12 +15,18 @@ export default class Navbar extends React.Component {
       avatarUrl: '',
       collapsed: false,
     };
+
+    this.logout = this.logout.bind(this);
   }
 
   async componentDidMount() {
     if (this.app.state.user) {
       this.setState(this.app.state.user);
     }
+  }
+
+  async logout() {
+    await this.app.userLogOut();
   }
 
   render() {
@@ -49,7 +55,6 @@ export default class Navbar extends React.Component {
           </span>
           {!loggedIn && <span>
             <Link to="/login" class="Bds(s) Bdw(1px) Bdrs(4px) Py(4px) Px(8px) Fz(16px) Mstart(20px) C(white) C($pink):h Td(n):h">Sign in</Link>
-            {/* <Link to="/register" class="Bgc(#ec84a2) Bdrs(4px) Py(5px) Px(8px) C(white):h Fz(16px) Mstart(20px) C(white) Td(n):h">Create account</Link> */}
             <Link to="/register" class="Bds(s) Bdw(1px) Bdrs(4px) Py(4px) Px(8px) C($pink):h Fz(16px) Mstart(20px) C($pink) Td(n):h">Create account</Link>
           </span>}
           {loggedIn && <div class="D(ib) Pos(r)">
@@ -64,8 +69,8 @@ export default class Navbar extends React.Component {
               <Link to="/likes" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Likes</Link>
               <Link to="/following" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Following</Link>
               <Link to="/tracks" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Tracks</Link>
-              <Link to="/settings" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Settings</Link>
-              <li class="D(b) C(white):h Cur(p) Bgc(#343a40) Bgc(black):h C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Sign out</li>
+              <Link to="/settings/profile" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Settings</Link>
+              <li onClick={this.logout} class="D(b) C(white):h Cur(p) Bgc(#343a40) Bgc(black):h C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Sign out</li>
             </ul>
           </div>
           }

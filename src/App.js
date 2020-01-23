@@ -10,11 +10,12 @@ import LoginPage from './components/LoginPage';
 import ProfilePage from './components/ProfilePage';
 
 import {Switch} from 'react-router-dom';
-import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING, FOLLOWER} from './components/utils';
+import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING, FOLLOWER, PROFILE, ACCOUNT, SECURITY} from './components/utils';
 import AlbumDetailPage from './components/AlbumDetailPage';
 import UploadPage from './components/UploadPage';
 import LibraryPage from './components/LibraryPage';
 import EditPage from './components/EditPage';
+import SettingPage from './components/SettingPage';
 
 const API_SUCCESS = 'SUCCESS';
 const API_URL = 'http://localhost:3000';
@@ -47,6 +48,7 @@ export default class App extends React.Component {
         } else {
           reject(response.data);
           this.userLogOut();
+          this.userLogin({email: 'alice@gmail.com', password: '123'});
         }
       }).catch((err) => {
         reject(err);
@@ -95,6 +97,25 @@ export default class App extends React.Component {
     this.history.push('/login');
   }
 
+  async uploadCover({token, buffer}) {
+    console.log('here');
+    const res = await this.genericApi1('/v1/tracks/cover', {token, buffer});
+    return res.payload;
+  }
+
+  async uploadTracks({token, buffers, fileNames, fileSizes, coverUrl, title, type, genre, tags, description}) {
+    const res = await this.genericApi1('/v1/tracks/upload', {token, buffers, fileNames, fileSizes, coverUrl, title, type, genre, tags, description});
+    if (buffers.length === 1) {
+      this.history.push(`/${this.state.user.userName}/${res.payload}`);
+    } else {
+      this.history.push(`/${this.state.user.userName}/album/${res.payload}`);
+    }
+  }
+
+  async trackDetail({trackId}) {
+    const res = await this.genericApi1('/v1/tracks/detail', {trackId});
+    return res.payload;
+  }
 
   render() {
     return <div>
@@ -105,8 +126,8 @@ export default class App extends React.Component {
         <PropsRoute exact path="/artist/popular" component={ArtistHomepage} tab={POPULAR} app={this}/>
         <PropsRoute exact path="/artist/tracks" component={ArtistHomepage} tab={TRACKS} app={this}/>
         <PropsRoute exact path="/artist/albums" component={ArtistHomepage} tab={ALBUMS} app={this}/>
-        <PropsRoute exact path="/detail" component={TrackDetailPage} app={this}/>
-        <PropsRoute exact path="/album/detail" component={AlbumDetailPage} app={this}/>
+        <PropsRoute exact path="/:userName/:trackId" component={TrackDetailPage} app={this}/>
+        <PropsRoute exact path="/:userName/album/:albumId" component={AlbumDetailPage} app={this}/>
         <PropsRoute exact path="/register" component={RegisterPage} app={this}/>
         <PropsRoute exact path="/login" component={LoginPage} app={this}/>
         <PropsRoute exact path="/upload" component={UploadPage} app={this}/>
@@ -122,6 +143,9 @@ export default class App extends React.Component {
         <PropsRoute exact path="/library/follower" component={LibraryPage} tab={FOLLOWER} app={this}/>
         <PropsRoute exact path="/album/edit" component={EditPage} type={ALBUMS} app={this}/>
         <PropsRoute exact path="/track/edit" component={EditPage} type={TRACKS} app={this}/>
+        <PropsRoute exact path="/settings/profile" component={SettingPage} app={this} tab={PROFILE}/>
+        <PropsRoute exact path="/settings/account" component={SettingPage} app={this} tab={ACCOUNT}/>
+        <PropsRoute exact path="/settings/security" component={SettingPage} app={this} tab={SECURITY}/>
 
       </Switch>
     </div>;

@@ -13,8 +13,19 @@ export default class TrackDetailPage extends React.Component {
     this.app = props.app;
     this.state = {
       playing: false,
+      artist: '',
+      title: '',
+      coverUrl: '',
+      colors: [],
+      trackUrl: '',
+      releaseDate: null,
     };
     this.play = this.play.bind(this);
+  }
+
+  async componentDidMount() {
+    const track = await this.app.trackDetail({thingId: this.props.match.params.trackId});
+    this.setState(track);
   }
 
   play(e) {
@@ -28,7 +39,7 @@ export default class TrackDetailPage extends React.Component {
     const {playing} = this.state;
 
     return <div class="W(80%) Mx(a)">
-      <div class="D(f) P(20px) My(20px)" style={{background: 'linear-gradient(#956E53, #70929c, transparent)'}}>
+      <div class="D(f) P(20px) My(20px)" style={{background: 'linear-gradient(135deg, rgba(251, 242, 234, 0.6), rgba(227, 76, 74, 0.5), rgba(85, 123, 105, 0.5))'}}>
         <div class="W(70%)">
           <div class="D(f) Jc(sb)">
             <div class="D(f)">
@@ -43,7 +54,7 @@ export default class TrackDetailPage extends React.Component {
             </div>
             <span class="Fl(end) C(white)">6 months ago</span>
           </div>
-          <div class="Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(lightgray) H(26px)">
+          <div class="Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) H(26px)">
             <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">0:29</span>
           </div>
           <TrackComment/>
