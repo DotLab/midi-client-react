@@ -25,7 +25,7 @@ export default class Navbar extends React.Component {
 
   render() {
     const {collapsed} = this.state;
-    const loggedIn = true;
+    const loggedIn = this.app.state.token;
     let avatarUrl = '';
     if (this.app.state.user) {
       avatarUrl = this.app.state.user.avatarUrl;
