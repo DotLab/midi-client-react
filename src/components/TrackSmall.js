@@ -5,9 +5,22 @@ export default class TrackSmall extends React.Component {
   constructor(props) {
     super(props);
     this.app = props.app;
+    this.state = {
+      playing: false,
+    };
+    this.play = this.play.bind(this);
   }
 
+  play(e) {
+    e.preventDefault();
+    const playing = !(this.state.playing);
+    this.setState({playing});
+  }
+
+
   render() {
+    const {playing} = this.state;
+
     return <div class="D(f) Mt(20px) Pos(r)">
       <img class="H(50px) W(50px)" src="https://beatsaver.com/cdn/3dbb/5c9ec42e4868d3f4cd18c0c23ada5dbcc558d402.jpg" alt=""/>
       <div class="Mstart(10px)">
@@ -21,8 +34,9 @@ export default class TrackSmall extends React.Component {
       </div>
       <span class="H(100%) Pos(a) Cur(p) Fz(10px) Op(1):h Op(0)">
         <div class="H(50px) W(50px) Fl(start) D(f) Jc(c) Ai(c)">
-          <span class="C(white) W(30px) H(30px) D(f) Jc(c) Ai(c) P(4px) bg-dark Bdrs(100%)">
-            <i class="fas fa-play"></i>
+          <span class="C(white) W(30px) H(30px) D(f) Jc(c) Ai(c) P(4px) bg-dark Bdrs(100%)" onClick={this.play}>
+            {!playing && <span><i class="fas fa-play"></i></span>}
+            {playing && <span><i class="fas fa-pause"></i></span>}
           </span>
         </div>
       </span>

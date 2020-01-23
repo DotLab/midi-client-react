@@ -1,6 +1,6 @@
 import React from 'react';
 const MAX_SIZE = 31457280;
-const INPUT_STYLE = 'W(100%) H(30px) Fz(16px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)';
+const INPUT_STYLE = 'W(100%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)';
 
 
 export default class UploadPage extends React.Component {
@@ -74,18 +74,66 @@ export default class UploadPage extends React.Component {
 
           <div class="W(60%) Mstart(20px)">
             <div>
-              <div class="Fz(16px) Fw(600) Mb(8px)">Title <span class="C(#cf0000)">*</span></div>
+              <div class="Fz(14px) Fw(600) Mb(4px)">Title <span class="C(#cf0000)">*</span></div>
               <input class={INPUT_STYLE} placeholder="Name your track"/>
             </div>
 
             <div class="Mt($m-control)">
-              <div class="Fz(16px) Fw(600) Mb(8px)">Tags</div>
+              <div class="Fz(14px) Fw(600) Mb(4px)">Playlist type</div>
+              <select class="W(50%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" defaultValue="invalid">
+                <option>Album</option>
+                <option>EP</option>
+                <option>Single</option>
+              </select>
+
+            </div>
+
+            <div class="Mt($m-control)">
+              <div class="Fz(14px) Fw(600) Mb(4px)">Genre</div>
+              <select class="W(50%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" defaultValue="invalid">
+                <option value={'none'}>None</option>
+                <option value={'Alternative'}>Alternative Rock</option>
+                <option value={'Ambient'}>Ambient</option>
+                <option value={'Classical'}>Classical</option>
+                <option value={'Country'}>Country</option>
+                <option value={'Dance'}>Dance &amp; EDM</option>
+                <option value={'Dancehall'}>Dancehall</option>
+                <option value={'Deep'}>Deep House</option>
+                <option value={'Disco'}>Disco</option>
+                <option value={'Drum'}>Drum &amp; Bass</option>
+                <option value={'Dubstep'}>Dubstep</option>
+                <option value={'Electronic'}>Electronic</option>
+                <option value={'Folk'}>Folk &amp; Singer-Songwriter</option>
+                <option value={'Hip'}>Hip-hop &amp; Rap</option>
+                <option value={'House'}>House</option>
+                <option value={'Indie'}>Indie</option>
+                <option value={'Jazz'}>Jazz &amp; Blues</option>
+                <option value={'Latin'}>Latin</option>
+                <option value={'Metal'}>Metal</option>
+                <option value={'Piano'}>Piano</option>
+                <option value={'Pop'}>Pop</option>
+                <option value={'R'}>R&amp;B &amp; Soul</option>
+                <option value={'Reggae'}>Reggae</option>
+                <option value={'Reggaeton'}>Reggaeton</option>
+                <option value={'Rock'}>Rock</option>
+                <option value={'Soundtrack'}>Soundtrack</option>
+                <option value={'Techno'}>Techno</option>
+                <option value={'Trance'}>Trance</option>
+                <option value={'Trap'}>Trap</option>
+                <option value={'Triphop'}>Triphop</option>
+                <option value={'World'}>World</option>
+              </select>
+
+            </div>
+
+            <div class="Mt($m-control)">
+              <div class="Fz(14px) Fw(600) Mb(4px)">Tags</div>
               <input class={INPUT_STYLE} placeholder="Add tags to describe the genre and mood of your track"/>
             </div>
 
             <div class="Mt($m-control)">
-              <div class="Fz(16px) Fw(600) Mb(8px)">Description</div>
-              <textarea class="W(100%) H(160px) Fz(16px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" placeholder="Describe your track"/>
+              <div class="Fz(14px) Fw(600) Mb(4px)">Description</div>
+              <textarea class="W(100%) H(160px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" placeholder="Describe your track"/>
             </div>
 
             <div class="Mt(40px) Fl(end)">

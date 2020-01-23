@@ -25,7 +25,7 @@ export default class Navbar extends React.Component {
 
   render() {
     const {collapsed} = this.state;
-    const loggedIn = this.app.state.token;
+    const loggedIn = true;
     let avatarUrl = '';
     if (this.app.state.user) {
       avatarUrl = this.app.state.user.avatarUrl;
@@ -54,7 +54,7 @@ export default class Navbar extends React.Component {
           </span>}
           {loggedIn && <div class="D(ib) Pos(r)">
             <div>
-              <Link to="/upload" class="Mend(20px) Py(4px) Px(8px) Fz(16px) Mstart(20px) C(#ec84a2) C(#ec84a2):h Td(n):h">Upload</Link>
+              <Link to="/upload" class="Bds(s) Bdw(1px) Bdrs(4px) Mend(20px) Py(4px) Px(8px) Fz(16px) Mstart(20px) C(#ec84a2) C(#ec84a2):h Td(n):h">Upload</Link>
               {!avatarUrl && <span onClick={() => this.setState({collapsed: true})}><i class="fas fa-user Mx(4px) C(white)"></i></span>}
               {avatarUrl && <img class="W(30px) H(30px) Bdrs(4px) Mx(4px)" src={avatarUrl} alt="avatar"></img>}
               <span onClick={() => this.setState({collapsed: true})}><i class="fas fa-caret-down C(white)"></i></span>

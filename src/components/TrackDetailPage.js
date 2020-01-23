@@ -4,28 +4,43 @@ import Comment from './Comment';
 import Lisa from './Lisa.jpg';
 import TrackSmall from './TrackSmall';
 import AlbumSmall from './AlbumSmall';
+import {Link} from 'react-router-dom';
 
 export default class TrackDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.app = props.app;
+    this.state = {
+      playing: false,
+    };
+    this.play = this.play.bind(this);
   }
 
+  play(e) {
+    e.preventDefault();
+    const playing = !(this.state.playing);
+    this.setState({playing});
+  }
+
+
   render() {
+    const {playing} = this.state;
+
     return <div class="W(80%) Mx(a)">
       <div class="D(f) P(20px) My(20px)" style={{background: 'linear-gradient(#956E53, #70929c, transparent)'}}>
         <div class="W(70%)">
           <div class="D(f) Jc(sb)">
             <div class="D(f)">
-              <span class="C(white) W(50px) H(50px) D(f) Jc(c) Ai(c) P(4px) bg-dark Bdrs(100%)">
-                <i class="fas fa-play"></i>
+              <span class="C(white) W(50px) H(50px) D(f) Jc(c) Ai(c) P(4px) bg-dark Bdrs(100%)" onClick={this.play}>
+                {!playing && <span><i class="fas fa-play"></i></span>}
+                {playing && <span vvvvvvvvvvv><i class="fas fa-pause"></i></span>}
               </span>
               <div class="Mx(20px)">
                 <div class="bg-dark C(white) Py(2px) Px(8px) W(maxc) My(4px) Fz(16px)">Lisa</div>
                 <div class="bg-dark C(white) Py(2px) Px(8px) W(maxc) Fz(18px)">Gurenge</div>
               </div>
             </div>
-            <span class="Fl(end)">6 months ago</span>
+            <span class="Fl(end) C(white)">6 months ago</span>
           </div>
           <div class="Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(lightgray) H(26px)">
             <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">0:29</span>
@@ -100,7 +115,7 @@ export default class TrackDetailPage extends React.Component {
         <div class="Px(30px) Miw(380px)">
           <div class="C(#999999) Fz(16px) Py(4px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
             <span>Related tracks</span>
-            <span class="Fl(end)">View all</span>
+            <Link to="/track/related" class="C(#999999) Td(n):h C(black):h"><span class="Fl(end)">View all</span></Link>
           </div>
           <TrackSmall/>
           <TrackSmall/>
@@ -109,7 +124,7 @@ export default class TrackDetailPage extends React.Component {
 
           <div class="C(#999999) Fz(16px) Mt(30px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
             <span>In albums</span>
-            <span class="Fl(end)">View all</span>
+            <Link to="/track/related" class="C(#999999) Td(n):h C(black):h"><span class="Fl(end)">View all</span></Link>
           </div>
           <AlbumSmall/>
 
