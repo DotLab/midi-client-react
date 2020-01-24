@@ -30,6 +30,7 @@ export default class TrackDetailPage extends React.Component {
       trackCount: 0,
       commentCount: 0,
       comments: [],
+      duration: 12,
     };
 
     this.onChange = onChange.bind(this);
@@ -85,7 +86,7 @@ export default class TrackDetailPage extends React.Component {
 
   render() {
     const {playing, artistName, artistAvatarUrl, title, coverUrl, colors, trackUrl, releaseDate, avatarUrl,
-      comment, followingCount, trackCount, commentCount, comments} = this.state;
+      comment, followingCount, trackCount, commentCount, comments, duration} = this.state;
 
     return <div class="W(80%) Mx(a)">
       <audio autoPlay src="https://soundcloud.com/lea-190346201/sword-art-online-crossing-field-sao-op-1">
@@ -113,7 +114,7 @@ export default class TrackDetailPage extends React.Component {
           {comments.map((comment) => <TrackComment key={comment._id} id={comment._id}
             commentAuthorId={comment.commentAuthorId} commentAuthorName={comment.commentAuthorName}
             commentAuthorAvatarUrl={comment.commentAuthorAvatarUrl} body={comment.body} date={comment.date}
-            timestamp={comment.timestamp}/>)}
+            timestamp={comment.timestamp} colors={colors} duration={duration}/>)}
         </div>
         <div class="Mstart(30px) W(30%)">
           <img class="H(100%) W(100%) " src={coverUrl} alt=""/>
@@ -126,7 +127,7 @@ export default class TrackDetailPage extends React.Component {
               rgba(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]}, 0.5), rgba(${colors[2][0]}, ${colors[2][1]}, ${colors[2][2]}, 0.5))`}}/>}
             {avatarUrl && <img class="Mend(6px) H(100%) W(44px)" src={avatarUrl} alt="avatar"/>}
             <form class="W(100%)" onSubmit={this.createComment}>
-              <input name="comment" value={comment} onChange={this.onChange} onFocus={this.handleComment} class="O(n) H(28px) Bdc(t) Bdrs(4px) P(4px) W(90%) Mend(6px)" placeholder="Write a comment"/>
+              <input name="comment" value={comment} onChange={this.onChange} onFocus={this.handleComment} class="O(n) H(28px) Bdc(t) Bdrs(4px) P(4px) W(96%) Mend(6px)" placeholder="Write a comment"/>
               <button class="D(ib) Op(0)" type="submit" onClick={this.createComment}/>
             </form>
           </div>
