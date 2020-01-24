@@ -114,6 +114,25 @@ export default class App extends React.Component {
 
   async trackDetail({trackId}) {
     const res = await this.genericApi1('/v1/tracks/detail', {trackId});
+    console.log(res);
+    return res.payload;
+  }
+
+  async artistInfo({artistId}) {
+    const res = await this.genericApi1('/v1/users/artist-info', {artistId});
+    return res.payload;
+  }
+
+  async createComment({token, trackId, comment, timestamp}) {
+    await this.genericApi1('/v1/tracks/comment/create', {token, trackId, comment, timestamp});
+  }
+
+  async deleteComment({token, commentId}) {
+    await this.genericApi1('/v1/tracks/comment/delete', {token, commentId});
+  }
+
+  async trackCommentList({trackId, limit, token}) {
+    const res = await this.genericApi1('/v1/tracks/comment-list', {trackId, limit, token});
     return res.payload;
   }
 
