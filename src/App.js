@@ -156,6 +156,39 @@ export default class App extends React.Component {
     await this.genericApi1('/v1/tracks/download', {trackId});
   }
 
+  async likeTrack({token, trackId}) {
+    await this.genericApi1('/v1/tracks/like', {token, trackId});
+  }
+
+  async unlikeTrack({token, trackId}) {
+    await this.genericApi1('/v1/tracks/unlike', {token, trackId});
+  }
+
+  async trackLikeCount({trackId}) {
+    const res = await this.genericApi1('/v1/tracks/like-count', {trackId});
+    return res.payload;
+  }
+
+  async trackLikeStatus({token, trackId}) {
+    const res = await this.genericApi1('/v1/tracks/like-status', {token, trackId});
+    return res.payload;
+  }
+
+  async newReleases({limit}) {
+    const res = await this.genericApi1('/v1/tracks/new-releases', {limit});
+    return res.payload;
+  }
+
+  async trending({limit}) {
+    const res = await this.genericApi1('/v1/tracks/trending', {limit});
+    return res.payload;
+  }
+
+  async favored({token}) {
+    const res = this.genericApi1('/v1/tracks/favored', {token});
+    return res.payload;
+  }
+
   render() {
     return <div>
       <PropsRoute path="/" component={Navbar} app={this}/>

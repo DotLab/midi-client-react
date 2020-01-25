@@ -78,3 +78,11 @@ export const SORT_VERIFIED = 'verified';
 
 export const HOME_COMMENT_LIMIT = 5;
 export const DETAIL_COMMENT_LIMIT = 30;
+
+export const NEW_RELEASES = 'New Releases';
+export const TRENDING = 'Trending';
+export const FAVORED = 'Your likings';
+export const NEW_DESCRIPTION = 'The latest hits';
+export const FAVORED_DESCRIPTION = 'Midi you liked';
+export const TRENDING_DESCRIPTION = 'The biggest hits on Scarletea Midi';
+

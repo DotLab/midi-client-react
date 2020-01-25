@@ -1,8 +1,4 @@
 import React from 'react';
-import MidiPlayer from 'midi-player-js';
-import Soundfont from 'soundfont-player';
-import {Media, Player, controls} from 'react-media-player';
-
 import TrackComment from './TrackComment';
 import Comment from './Comment';
 import TrackSmall from './TrackSmall';
@@ -10,7 +6,6 @@ import AlbumSmall from './AlbumSmall';
 import {Link} from 'react-router-dom';
 import TrackPanel from './TrackPanel';
 import {formatDate, onChange, formatTime} from '../utils';
-import Track from './Track';
 import {DEFAULT_LIMIT} from './utils';
 
 export default class TrackDetailPage extends React.Component {
@@ -41,6 +36,8 @@ export default class TrackDetailPage extends React.Component {
       album: null,
       relatedTracks: [],
       signedUrl: '',
+      liked: false,
+      likeCount: 0,
     };
 
     this.onChange = onChange.bind(this);
@@ -49,6 +46,8 @@ export default class TrackDetailPage extends React.Component {
     this.createComment = this.createComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
     this.downloadFile = this.downloadFile.bind(this);
+    this.like = this.like.bind(this);
+    this.unlike = this.unlike.bind(this);
   }
 
   async componentDidMount() {
@@ -64,7 +63,14 @@ export default class TrackDetailPage extends React.Component {
     const relatedTracks = await this.app.relatedTracks({trackId: this.state.trackId});
     const comments = await this.app.trackCommentList({token: this.app.state.token, trackId: this.props.match.params.trackId, limit: DEFAULT_LIMIT});
     const signedUrl = await this.app.getSignedUrl({trackId: this.state.trackId});
-    this.setState({comments, album, relatedTracks, signedUrl});
+    const likeCount = await this.app.trackLikeCount({token: this.app.state.token, trackId: this.state.trackId});
+    let liked = false;
+    if (this.app.state.user) {
+      liked = await this.app.trackLikeStatus({token: this.app.state.token, trackId: this.state.trackId});
+      console.log(liked);
+    }
+
+    this.setState({comments, album, relatedTracks, signedUrl, liked, likeCount});
 
     const audio = new Audio(this.state.trackUrl);
     audio.addEventListener('loadeddata', () => {
@@ -74,7 +80,9 @@ export default class TrackDetailPage extends React.Component {
   }
 
   componentWillUnmount() {
-    this.state.audio.pause();
+    if (this.state.audio) {
+      this.state.audio.pause();
+    }
   }
 
   async play(e) {
@@ -120,9 +128,26 @@ export default class TrackDetailPage extends React.Component {
     await this.app.downloadFile({trackId: this.state.trackId});
   }
 
+  async like() {
+    if (!this.app.state.user) {
+      this.app.saveUrl(this.props.location.pathname);
+      this.props.history.push('/login');
+      return;
+    }
+    await this.app.likeTrack({token: this.app.state.token, trackId: this.state.trackId});
+    const likeCount = await this.app.trackLikeCount({trackId: this.state.trackId});
+    this.setState({likeCount, liked: true});
+  }
+
+  async unlike() {
+    await this.app.unlikeTrack({token: this.app.state.token, trackId: this.state.trackId});
+    const likeCount = await this.app.trackLikeCount({trackId: this.state.trackId});
+    this.setState({likeCount, liked: false});
+  }
+
   render() {
-    const {playing, artistName, artistAvatarUrl, title, coverUrl, trackUrl, colors, releaseDate, avatarUrl,
-      comment, followingCount, trackCount, comments, duration, album, relatedTracks, signedUrl} = this.state;
+    const {playing, artistName, artistAvatarUrl, title, coverUrl, colors, releaseDate, avatarUrl,
+      comment, followingCount, trackCount, comments, duration, album, relatedTracks, signedUrl, liked, likeCount} = this.state;
 
     const isOwner = this.app.state.user && (this.app.state.user.userName === artistName);
 
@@ -173,10 +198,11 @@ export default class TrackDetailPage extends React.Component {
           </div>
 
           <div class="D(f) Jc(sb) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) Ai(b) Pb(10px)">
-            <TrackPanel isOwner={isOwner} signedUrl={signedUrl} title={title} signedUrl={signedUrl}/>
+            <TrackPanel isOwner={isOwner} signedUrl={signedUrl} title={title}
+              liked={liked} like={this.like} unlike={this.unlike}/>
             <div>
-              <span class="Fz(14px) Mend(20px) C(#999999)"><i class="Fz(12px) Mend(2px) fas fa-play"></i> 34k</span>
-              <span class="Fz(14px) C(#999999)"><i class="Mend(2px) fas fa-heart"></i> 34k</span>
+              {/* <span class="Fz(14px) Mend(20px) C(#999999)"><i class="Fz(12px) Mend(2px) fas fa-play"></i> 34k</span> */}
+              <span class="Fz(14px) C(#999999)"><i class="Mend(2px) fas fa-heart"></i> {likeCount}</span>
             </div>
           </div>
           <div class="D(f) Mt(20px)">
