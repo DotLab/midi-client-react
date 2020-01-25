@@ -22,7 +22,7 @@ export default class UploadPage extends React.Component {
       coverUrl: null,
       coverBuffer: null,
       title: '',
-      type: '',
+      type: null,
       genre: '',
       tags: '',
       description: '',
@@ -33,6 +33,10 @@ export default class UploadPage extends React.Component {
     this.onCoverChange = this.onCoverChange.bind(this);
     this.uploadCover = this.uploadCover.bind(this);
     this.uploadTracks = this.uploadTracks.bind(this);
+  }
+
+  checkRequired() {
+    return this.state.coverUrl && this.state.title.length !== 0 && this.state.type;
   }
 
   onFileChange(e) {
@@ -128,12 +132,12 @@ export default class UploadPage extends React.Component {
           <div class="W(60%) Mstart(20px)">
             <div>
               <div class="Fz(14px) Fw(600) Mb(4px)">Title <span class="C(#cf0000)">*</span></div>
-              <input name="title" value={title} onChange={this.onChange} class={INPUT_STYLE} placeholder="Name your track"/>
+              <input required name="title" value={title} onChange={this.onChange} class={INPUT_STYLE} placeholder="Name your track"/>
             </div>
 
             <div class="Mt($m-control)">
-              <div class="Fz(14px) Fw(600) Mb(4px)">Type</div>
-              <select name="type" onChange={this.onChange} class="W(50%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" defaultValue="invalid">
+              <div class="Fz(14px) Fw(600) Mb(4px)">Type <span class="C(#cf0000)">*</span></div>
+              <select required name="type" onChange={this.onChange} class="W(50%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" defaultValue="invalid">
                 <option value="invalid" disabled class="D(n)"></option>
                 <option value={TRACK}>Track</option>
                 <option value={ALBUM}>Album</option>
@@ -197,7 +201,7 @@ export default class UploadPage extends React.Component {
 
             <div class="Mt(10px) Fl(end)">
               <span class="Fz(16px) Mx(20px) Cur(p)" onClick={() => this.setState({buffers: [], fileNames: [], fileSizes: []})}>Cancel</span>
-              <button onClick={this.uploadTracks} class="Bdc(t) Bdrs(4px) Px(8px) Bgc($pink) C(white) Fz(14px) Mt(10px) H(28px)">Save</button>
+              <button onClick={this.uploadTracks} disabled={!this.checkRequired()} class="Bdc(t) Bdrs(4px) Px(8px) Bgc($pink) C(white) Fz(14px) Mt(10px) H(28px)">Save</button>
             </div>
           </div>
 

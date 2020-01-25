@@ -10,7 +10,7 @@ import LoginPage from './components/LoginPage';
 import ProfilePage from './components/ProfilePage';
 
 import {Switch} from 'react-router-dom';
-import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING, FOLLOWER, PROFILE, ACCOUNT, SECURITY} from './components/utils';
+import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING, FOLLOWER, PROFILE, ACCOUNT, SECURITY, TRACK} from './components/utils';
 import AlbumDetailPage from './components/AlbumDetailPage';
 import UploadPage from './components/UploadPage';
 import LibraryPage from './components/LibraryPage';
@@ -112,6 +112,15 @@ export default class App extends React.Component {
     }
   }
 
+  async editTracks({token, trackId, coverUrl, title, type, genre, tags, description}) {
+    await this.genericApi1('/v1/tracks/edit', {token, trackId, coverUrl, title, type, genre, tags, description});
+    if (type === TRACK) {
+      this.history.push(`/${this.state.user.userName}/${trackId}`);
+    } else {
+      this.history.push(`/${this.state.user.userName}/album/${trackId}`);
+    }
+  }
+
   async trackDetail({trackId}) {
     const res = await this.genericApi1('/v1/tracks/detail', {trackId});
     console.log(res);
@@ -193,6 +202,7 @@ export default class App extends React.Component {
     console.log(res);
     return res.payload;
   }
+
 
   render() {
     return <div>
