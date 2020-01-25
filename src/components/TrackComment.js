@@ -15,7 +15,7 @@ export default class TrackComment extends React.Component {
     const {hover} = this.state;
     const pos = timestamp / duration * 100;
 
-    return <div class={`D(ib) W(20px) Mstart(${pos}%)`}>
+    return <div class="Pos(a) D(ib) W(20px)" style={{left: `${pos}%`}}>
       {commentAuthorAvatarUrl &&<img class="D(b) H(20px) W(20px) " onMouseEnter={() => this.setState({hover: true})}
         onMouseLeave={() => this.setState({hover: false})} src={commentAuthorAvatarUrl} alt=""/>}
       {!commentAuthorAvatarUrl && <div class="H(20px) W(20px)" onMouseEnter={() => this.setState({hover: true})}

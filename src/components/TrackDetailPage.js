@@ -17,6 +17,8 @@ export default class TrackDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.app = props.app;
+    this.progress = React.createRef();
+
     this.state = {
       trackId: this.props.match.params.trackId,
       playing: false,
@@ -65,6 +67,10 @@ export default class TrackDetailPage extends React.Component {
     console.log(this.state);
   }
 
+  componentWillUnmount() {
+    this.state.audio.pause();
+  }
+
   async play(e) {
     const playing = !(this.state.playing);
 
@@ -75,9 +81,8 @@ export default class TrackDetailPage extends React.Component {
     }
 
     this.state.audio.addEventListener('timeupdate', () => {
-      const currentTime = this.state.audio.currentTime;
+      const currentTime = Math.floor(this.state.audio.currentTime);
       this.setState({currentTime});
-      // The duration variable now holds the duration (in seconds) of the audio clip
     });
 
     this.setState({playing});
@@ -92,6 +97,7 @@ export default class TrackDetailPage extends React.Component {
   handleComment(e) {
     e.preventDefault();
     if (!this.app.state.user) {
+      this.state.audio.pause();
       this.app.saveUrl(this.props.location.pathname);
       this.props.history.push('/login');
     }
@@ -99,7 +105,7 @@ export default class TrackDetailPage extends React.Component {
 
   async createComment(e) {
     e.preventDefault();
-    await this.app.createComment({token: this.app.state.token, trackId: this.state.trackId, comment: this.state.comment, timestamp: 0});
+    await this.app.createComment({token: this.app.state.token, trackId: this.state.trackId, comment: this.state.comment, timestamp: this.state.currentTime});
     const comments = await this.app.trackCommentList({token: this.app.state.token, trackId: this.props.match.params.trackId, limit: DEFAULT_LIMIT});
     this.setState({comments});
   }
@@ -136,19 +142,21 @@ export default class TrackDetailPage extends React.Component {
             </div>
             <span class="Fl(end) C(white)">{formatDate(releaseDate)}</span>
           </div>
-          <div class="Pos(r) Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) H(26px)">
-            <span class="Fl(start) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">{formatTime(currentTime)}</span>
-            <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">{formatTime(duration)}</span>
-            {/* {trackUrl && <audio controls class="Pos(a) W(100%) Start(0px) Py(24px) O(n)">
+          <div class="Pos(r)">
+            <div class="Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) H(26px)">
+              <span class="Fl(start) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">{formatTime(currentTime)}</span>
+              <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">{formatTime(duration)}</span>
+              {/* {trackUrl && <audio controls class="Pos(a) W(100%) Start(0px) Py(24px) O(n)">
               <source src={trackUrl} type="audio/mpeg"/>
             </audio>} */}
-            <div ref={this.progress} class="B(-0.5px) Pos(a) Mt(60px) Bdbs(s) Bdbw(3px) Bdbc(black) H(26px)"/>
-          </div>
+              <div class="B(-0.5px) Pos(a) Mt(60px) Bdbs(s) Bdbw(3px) Bdbc(black) H(26px)" style={{width: `${curr}%`}}/>
+            </div>
 
-          {comments.map((comment) => <TrackComment key={comment._id} id={comment._id}
-            commentAuthorId={comment.commentAuthorId} commentAuthorName={comment.commentAuthorName}
-            commentAuthorAvatarUrl={comment.commentAuthorAvatarUrl} body={comment.body} date={comment.date}
-            timestamp={comment.timestamp} colors={colors} duration={duration}/>)}
+            {comments.map((comment) => <TrackComment key={comment._id} id={comment._id}
+              commentAuthorId={comment.commentAuthorId} commentAuthorName={comment.commentAuthorName}
+              commentAuthorAvatarUrl={comment.commentAuthorAvatarUrl} body={comment.body} date={comment.date}
+              timestamp={comment.timestamp} colors={colors} duration={duration}/>)}
+          </div>
         </div>
         <div class="Mstart(30px) W(30%)">
           <img class="H(100%) W(100%) " src={coverUrl} alt=""/>
