@@ -48,6 +48,7 @@ export default class TrackDetailPage extends React.Component {
     this.downloadFile = this.downloadFile.bind(this);
     this.like = this.like.bind(this);
     this.unlike = this.unlike.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   async componentDidMount() {
@@ -71,7 +72,34 @@ export default class TrackDetailPage extends React.Component {
     }
 
     this.setState({comments, album, relatedTracks, signedUrl, liked, likeCount});
+    const audio = new Audio(this.state.trackUrl);
+    audio.addEventListener('loadeddata', () => {
+      const duration = audio.duration;
+      this.setState({audio, duration});
+    });
+  }
 
+  async componentWillReceiveProps(newProps) {
+    const track = await this.app.trackDetail({trackId: newProps.match.params.trackId});
+    this.setState(track);
+    if (this.app.state.user) {
+      this.setState({avatarUrl: this.app.state.user.avatarUrl});
+    }
+
+    const artist = await this.app.artistInfo({artistId: this.state.artistId});
+    this.setState(artist);
+    const album = await this.app.inAlbum({trackId: newProps.match.params.trackId});
+    const relatedTracks = await this.app.relatedTracks({trackId: newProps.match.params.trackId});
+    const comments = await this.app.trackCommentList({token: this.app.state.token, trackId: this.props.match.params.trackId, limit: DEFAULT_LIMIT});
+    const signedUrl = await this.app.getSignedUrl({trackId: newProps.match.params.trackId});
+    const likeCount = await this.app.trackLikeCount({token: this.app.state.token, trackId: newProps.match.params.trackId});
+    let liked = false;
+    if (this.app.state.user) {
+      liked = await this.app.trackLikeStatus({token: this.app.state.token, trackId: newProps.match.params.trackId});
+      console.log(liked);
+    }
+
+    this.setState({comments, album, relatedTracks, signedUrl, liked, likeCount});
     const audio = new Audio(this.state.trackUrl);
     audio.addEventListener('loadeddata', () => {
       const duration = audio.duration;
@@ -145,9 +173,15 @@ export default class TrackDetailPage extends React.Component {
     this.setState({likeCount, liked: false});
   }
 
+  async delete(e) {
+    e.preventDefault();
+    await this.app.deleteTrack({token: this.app.state.token, trackId: this.state.trackId});
+    this.props.history.push(`/${this.state.artistName}`);
+  }
+
   render() {
     const {playing, artistName, artistAvatarUrl, title, coverUrl, colors, releaseDate, avatarUrl,
-      comment, followingCount, trackCount, comments, duration, album, relatedTracks, signedUrl, liked, likeCount} = this.state;
+      comment, followingCount, trackCount, comments, duration, album, relatedTracks, signedUrl, liked, likeCount, trackId} = this.state;
 
     const isOwner = this.app.state.user && (this.app.state.user.userName === artistName);
 
@@ -198,8 +232,8 @@ export default class TrackDetailPage extends React.Component {
           </div>
 
           <div class="D(f) Jc(sb) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) Ai(b) Pb(10px)">
-            <TrackPanel isOwner={isOwner} signedUrl={signedUrl} title={title}
-              liked={liked} like={this.like} unlike={this.unlike}/>
+            <TrackPanel isOwner={isOwner} signedUrl={signedUrl} title={title} liked={liked} like={this.like} unlike={this.unlike}
+              delete={this.delete} artistName={artistName} id={trackId}/>
             <div>
               {/* <span class="Fz(14px) Mend(20px) C(#999999)"><i class="Fz(12px) Mend(2px) fas fa-play"></i> 34k</span> */}
               <span class="Fz(14px) C(#999999)"><i class="Mend(2px) fas fa-heart"></i> {likeCount}</span>
@@ -230,15 +264,15 @@ export default class TrackDetailPage extends React.Component {
           </div>
         </div>
 
-        {relatedTracks.length !== 0 && album && <div class="Px(30px) Miw(380px)">
+        {(relatedTracks.length !== 0 || album) && <div class="Px(30px) Miw(380px)">
           {relatedTracks.length !== 0 && <div>
             <div class="C(#999999) Fz(16px) Py(4px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
               <span>Related tracks</span>
               <Link to="/track/related" class="C(#999999) Td(n):h C(black):h"><span class="Fl(end)">View all</span></Link>
             </div>
-            {relatedTracks.map((track) => <TrackSmall key={track._id} id={track._id}
-              artistName={track.artistName} artistAvatarUrl={track.artistAvatarUrl} title={track.title}
-              likeCount={track.likeCount} commentCount={track.commentCount} playCount={track.playCount} />)}
+            {relatedTracks.map((track) => <TrackSmall key={track._id} trackId={track._id}
+              artistName={track.artistName} coverUrl={track.coverUrl} title={track.title}
+              likeCount={track.likeCount} commentCount={track.commentCount}/>)}
           </div>}
 
           {album && <div>

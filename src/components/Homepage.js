@@ -20,7 +20,7 @@ export default class Homepage extends React.Component {
     this.setState({newReleases, trending});
     if (this.app.state.token) {
       const favored = await this.app.favored({token: this.app.state.token});
-      this.setState({newReleases, favored});
+      this.setState({favored});
     }
   }
 
@@ -29,7 +29,7 @@ export default class Homepage extends React.Component {
 
     return <div class="W(80%) Mx(a)">
       <MusicScroll title={NEW_RELEASES} description={NEW_DESCRIPTION} listings={newReleases}/>
-      {favored && <MusicScroll title={FAVORED} description={FAVORED_DESCRIPTION} listings={favored}/>}
+      {favored.length !==0 && <MusicScroll title={FAVORED} description={FAVORED_DESCRIPTION} listings={favored}/>}
       <MusicScroll title={TRENDING} description={TRENDING_DESCRIPTION} listings={trending}/>
     </div>;
   }

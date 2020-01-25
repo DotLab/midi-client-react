@@ -174,6 +174,10 @@ export default class App extends React.Component {
     return res.payload;
   }
 
+  async deleteTrack({token, trackId}) {
+    await this.genericApi1('/v1/tracks/delete', {token, trackId});
+  }
+
   async newReleases({limit}) {
     const res = await this.genericApi1('/v1/tracks/new-releases', {limit});
     return res.payload;
@@ -185,7 +189,8 @@ export default class App extends React.Component {
   }
 
   async favored({token}) {
-    const res = this.genericApi1('/v1/tracks/favored', {token});
+    const res = await this.genericApi1('/v1/tracks/favored', {token});
+    console.log(res);
     return res.payload;
   }
 
@@ -199,6 +204,7 @@ export default class App extends React.Component {
         <PropsRoute exact path="/artist/tracks" component={ArtistHomepage} tab={TRACKS} app={this}/>
         <PropsRoute exact path="/artist/albums" component={ArtistHomepage} tab={ALBUMS} app={this}/>
         <PropsRoute exact path="/:userName/:trackId" component={TrackDetailPage} app={this}/>
+        <PropsRoute exact path="/:userName/:trackId/edit" component={EditPage} type={TRACKS} app={this}/>
         <PropsRoute exact path="/:userName/album/:albumId" component={AlbumDetailPage} app={this}/>
         <PropsRoute exact path="/register" component={RegisterPage} app={this}/>
         <PropsRoute exact path="/login" component={LoginPage} app={this}/>
@@ -214,7 +220,6 @@ export default class App extends React.Component {
         <PropsRoute exact path="/library/following" component={LibraryPage} tab={FOLLOWING} app={this}/>
         <PropsRoute exact path="/library/follower" component={LibraryPage} tab={FOLLOWER} app={this}/>
         <PropsRoute exact path="/album/edit" component={EditPage} type={ALBUMS} app={this}/>
-        <PropsRoute exact path="/track/edit" component={EditPage} type={TRACKS} app={this}/>
         <PropsRoute exact path="/settings/profile" component={SettingPage} app={this} tab={PROFILE}/>
         <PropsRoute exact path="/settings/account" component={SettingPage} app={this} tab={ACCOUNT}/>
         <PropsRoute exact path="/settings/security" component={SettingPage} app={this} tab={SECURITY}/>

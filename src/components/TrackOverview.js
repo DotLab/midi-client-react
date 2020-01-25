@@ -13,6 +13,12 @@ export default class TrackOverview extends React.Component {
     this.play = this.play.bind(this);
   }
 
+  componentWillUnmount() {
+    if (this.state.audio) {
+      this.state.audio.pause();
+    }
+  }
+
   play(e) {
     e.preventDefault();
     const playing = !(this.state.playing);
