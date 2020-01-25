@@ -235,7 +235,6 @@ export default class TrackDetailPage extends React.Component {
             <TrackPanel isOwner={isOwner} signedUrl={signedUrl} title={title} liked={liked} like={this.like} unlike={this.unlike}
               delete={this.delete} artistName={artistName} id={trackId}/>
             <div>
-              {/* <span class="Fz(14px) Mend(20px) C(#999999)"><i class="Fz(12px) Mend(2px) fas fa-play"></i> 34k</span> */}
               <span class="Fz(14px) C(#999999)"><i class="Mend(2px) fas fa-heart"></i> {likeCount}</span>
             </div>
           </div>
@@ -268,7 +267,6 @@ export default class TrackDetailPage extends React.Component {
           {relatedTracks.length !== 0 && <div>
             <div class="C(#999999) Fz(16px) Py(4px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
               <span>Related tracks</span>
-              <Link to="/track/related" class="C(#999999) Td(n):h C(black):h"><span class="Fl(end)">View all</span></Link>
             </div>
             {relatedTracks.map((track) => <TrackSmall key={track._id} trackId={track._id}
               artistName={track.artistName} coverUrl={track.coverUrl} title={track.title}
