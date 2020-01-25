@@ -56,5 +56,25 @@ export const TECH = 'Techno';
 export const TRANCE = 'Trance';
 export const TRAP = 'Trap';
 export const TRIPHOP = 'Triphop';
-export const WORLD = 'World'
-;
+export const WORLD = 'World';
+
+export const BAD_REQUEST = 400;
+export const UNAUTHORIZED = 401;
+export const FORBIDDEN = 403;
+export const NOT_FOUND = 404;
+
+export const DEFAULT_LIMIT = 20;
+export const DEFAULT_SKIP = 0;
+export const QUERY_ASC = 'asc';
+export const QUERY_DESC = 'desc';
+
+export const FILTER_ALL = 'All';
+export const SORT_DATE = 'newest';
+export const SORT_POPULAR = 'popular';
+export const SORT_MAKES = 'makes';
+export const SORT_REMIXES = 'remixes';
+export const SORT_VIEWS = 'views';
+export const SORT_VERIFIED = 'verified';
+
+export const HOME_COMMENT_LIMIT = 5;
+export const DETAIL_COMMENT_LIMIT = 30;

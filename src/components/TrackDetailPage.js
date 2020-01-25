@@ -1,13 +1,17 @@
 import React from 'react';
+import MidiPlayer from 'midi-player-js';
+import Soundfont from 'soundfont-player';
+import {Media, Player, controls} from 'react-media-player';
+
 import TrackComment from './TrackComment';
 import Comment from './Comment';
-import Lisa from './Lisa.jpg';
 import TrackSmall from './TrackSmall';
 import AlbumSmall from './AlbumSmall';
 import {Link} from 'react-router-dom';
 import TrackPanel from './TrackPanel';
-import {formatDate, onChange, DEFAULT_LIMIT} from '../utils';
+import {formatDate, onChange, formatTime} from '../utils';
 import Track from './Track';
+import {DEFAULT_LIMIT} from './utils';
 
 export default class TrackDetailPage extends React.Component {
   constructor(props) {
@@ -28,13 +32,15 @@ export default class TrackDetailPage extends React.Component {
       comment: '',
       followingCount: 0,
       trackCount: 0,
-      commentCount: 0,
       comments: [],
-      duration: 12,
+      duration: 0,
+      currentTime: 0,
+      audio: null,
     };
 
     this.onChange = onChange.bind(this);
     this.play = this.play.bind(this);
+    this.handleTime = this.handleTime.bind(this);
     this.handleComment = this.handleComment.bind(this);
     this.createComment = this.createComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
@@ -50,17 +56,37 @@ export default class TrackDetailPage extends React.Component {
     this.setState(artist);
     const comments = await this.app.trackCommentList({token: this.app.state.token, trackId: this.props.match.params.trackId, limit: DEFAULT_LIMIT});
     this.setState({comments});
+    const audio = new Audio(this.state.trackUrl);
+    audio.addEventListener('loadeddata', () => {
+      const duration = audio.duration;
+      this.setState({audio, duration});
+    });
 
     console.log(this.state);
   }
 
   async play(e) {
-    e.preventDefault();
     const playing = !(this.state.playing);
-    const audio = new Audio(this.state.trackUrl);
-    audio.type = 'audio/midi';
-    await audio.play();
+
+    if (!this.state.playing) {
+      this.state.audio.play();
+    } else {
+      this.state.audio.pause();
+    }
+
+    this.state.audio.addEventListener('timeupdate', () => {
+      const currentTime = this.state.audio.currentTime;
+      this.setState({currentTime});
+      // The duration variable now holds the duration (in seconds) of the audio clip
+    });
+
     this.setState({playing});
+  }
+
+  async handleTime(e) {
+    const currentTime = Math.floor(e.target.currentTime);
+    console.log(currentTime);
+    this.setState({currentTime});
   }
 
   handleComment(e) {
@@ -86,12 +112,14 @@ export default class TrackDetailPage extends React.Component {
 
   render() {
     const {playing, artistName, artistAvatarUrl, title, coverUrl, colors, trackUrl, releaseDate, avatarUrl,
-      comment, followingCount, trackCount, commentCount, comments, duration} = this.state;
+      comment, followingCount, trackCount, comments, duration, currentTime} = this.state;
 
+    const curr = Math.floor(currentTime / duration * 100);
+    console.log(curr);
     return <div class="W(80%) Mx(a)">
-      <audio autoPlay src="https://soundcloud.com/lea-190346201/sword-art-online-crossing-field-sao-op-1">
-
-      </audio>
+      {/* {trackUrl && <audio controls onTimeUpdate={this.handleTime}>
+        <source src={trackUrl} type="audio/mpeg"/>
+      </audio>} */}
       <div class="D(f) P(20px) My(20px) Miw(800px)" style={{background: `linear-gradient(135deg, rgba(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]}, 0.6), 
         rgba(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]}, 0.5), rgba(${colors[2][0]}, ${colors[2][1]}, ${colors[2][2]}, 0.5))`}}>
         <div class="W(70%)">
@@ -108,9 +136,15 @@ export default class TrackDetailPage extends React.Component {
             </div>
             <span class="Fl(end) C(white)">{formatDate(releaseDate)}</span>
           </div>
-          <div class="Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) H(26px)">
-            <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">0:29</span>
+          <div class="Pos(r) Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) H(26px)">
+            <span class="Fl(start) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">{formatTime(currentTime)}</span>
+            <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">{formatTime(duration)}</span>
+            {/* {trackUrl && <audio controls class="Pos(a) W(100%) Start(0px) Py(24px) O(n)">
+              <source src={trackUrl} type="audio/mpeg"/>
+            </audio>} */}
+            <div ref={this.progress} class="B(-0.5px) Pos(a) Mt(60px) Bdbs(s) Bdbw(3px) Bdbc(black) H(26px)"/>
           </div>
+
           {comments.map((comment) => <TrackComment key={comment._id} id={comment._id}
             commentAuthorId={comment.commentAuthorId} commentAuthorName={comment.commentAuthorName}
             commentAuthorAvatarUrl={comment.commentAuthorAvatarUrl} body={comment.body} date={comment.date}

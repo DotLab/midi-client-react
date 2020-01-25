@@ -106,7 +106,7 @@ export default class UploadPage extends React.Component {
           <div class="Fz(12px) Pstart(40px) My(20px) Pos(r)">
             <input class="Cur(p) Pos(a) Op(0) W(300px) H(40px)"
               key={inputKey} multiple type="file" name="file"
-              accept=".mid"
+              accept=".mp3, .mid, .wav"
               onChange={this.onFileChange}/>
             <button class="Bgc($pink) Miw(300px) Fz(20px) C(white) Bdc(t) Bdrs(4px) Py(10px)">Choose files to upload</button>
           </div>

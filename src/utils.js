@@ -123,23 +123,28 @@ export function pushHistory() {
   this.props.history.push(this.props.location.pathname + '?' + queryString.stringify(this.query));
 }
 
-export const BAD_REQUEST = 400;
-export const UNAUTHORIZED = 401;
-export const FORBIDDEN = 403;
-export const NOT_FOUND = 404;
+export function formatTime(second) {
+  let hr = 0;
+  let min = second / 60;
+  let sec = 0;
+  if (min > 60) {
+    hr = min / 60;
+    sec = min % 60;
+    min = min / 60;
+  } else {
+    sec = second % 60;
+  }
+  if (hr !== 0) {
+    return formatDuration(Math.floor(hr)) + ':' + formatDuration(Math.floor(min)) + ':' + formatDuration(Math.floor(sec));
+  } else {
+    return formatDuration(Math.floor(min)) + ':' + formatDuration(Math.floor(sec));
+  }
+}
 
-export const DEFAULT_LIMIT = 20;
-export const DEFAULT_SKIP = 0;
-export const QUERY_ASC = 'asc';
-export const QUERY_DESC = 'desc';
-
-export const FILTER_ALL = 'All';
-export const SORT_DATE = 'newest';
-export const SORT_POPULAR = 'popular';
-export const SORT_MAKES = 'makes';
-export const SORT_REMIXES = 'remixes';
-export const SORT_VIEWS = 'views';
-export const SORT_VERIFIED = 'verified';
-
-export const HOME_COMMENT_LIMIT = 5;
-export const DETAIL_COMMENT_LIMIT = 30;
+function formatDuration(number) {
+  if (number < 10) {
+    return '0' + number.toString();
+  } else {
+    return number.toString();
+  }
+}
