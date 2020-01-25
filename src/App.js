@@ -136,6 +136,26 @@ export default class App extends React.Component {
     return res.payload;
   }
 
+  async inAlbum({trackId}) {
+    const res = await this.genericApi1('/v1/tracks/in-album', {trackId});
+    return res.payload;
+  }
+
+  async relatedTracks({trackId}) {
+    const res = await this.genericApi1('/v1/tracks/related-tracks', {trackId});
+    return res.payload;
+  }
+
+  async getSignedUrl({trackId}) {
+    const res = await this.genericApi1('/v1/tracks/signed-url', {trackId});
+    console.log(res);
+    return res.payload;
+  }
+
+  async downloadFile({trackId}) {
+    await this.genericApi1('/v1/tracks/download', {trackId});
+  }
+
   render() {
     return <div>
       <PropsRoute path="/" component={Navbar} app={this}/>

@@ -135,9 +135,9 @@ export function formatTime(second) {
     sec = second % 60;
   }
   if (hr !== 0) {
-    return formatDuration(Math.floor(hr)) + ':' + formatDuration(Math.floor(min)) + ':' + formatDuration(Math.floor(sec));
+    return Math.floor(hr) + ':' + Math.floor(min) + ':' + formatDuration(Math.floor(sec));
   } else {
-    return formatDuration(Math.floor(min)) + ':' + formatDuration(Math.floor(sec));
+    return Math.floor(min) + ':' + formatDuration(Math.floor(sec));
   }
 }
 

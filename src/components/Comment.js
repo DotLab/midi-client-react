@@ -1,5 +1,5 @@
 import React from 'react';
-import {formatDate} from '../utils';
+import {formatDate, formatTime} from '../utils';
 
 export default class Comment extends React.Component {
   constructor(props) {
@@ -30,7 +30,7 @@ export default class Comment extends React.Component {
       <div class="W(90%) Mstart(10px)">
         <div class="C(#999999) Fz(14px)">
           <span>{commentAuthorName} </span>at
-          <span> {timestamp}</span>
+          <span> {formatTime(timestamp)}</span>
           <span class="Fl(end)">{formatDate(date)}</span>
         </div>
         <div class="Fz(16px)">

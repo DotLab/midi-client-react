@@ -17,6 +17,7 @@ export default class TrackDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.app = props.app;
+    this.currentTime = React.createRef();
     this.progress = React.createRef();
 
     this.state = {
@@ -36,16 +37,18 @@ export default class TrackDetailPage extends React.Component {
       trackCount: 0,
       comments: [],
       duration: 0,
-      currentTime: 0,
       audio: null,
+      album: null,
+      relatedTracks: [],
+      signedUrl: '',
     };
 
     this.onChange = onChange.bind(this);
     this.play = this.play.bind(this);
-    this.handleTime = this.handleTime.bind(this);
     this.handleComment = this.handleComment.bind(this);
     this.createComment = this.createComment.bind(this);
     this.deleteComment = this.deleteComment.bind(this);
+    this.downloadFile = this.downloadFile.bind(this);
   }
 
   async componentDidMount() {
@@ -54,17 +57,20 @@ export default class TrackDetailPage extends React.Component {
     if (this.app.state.user) {
       this.setState({avatarUrl: this.app.state.user.avatarUrl});
     }
+
     const artist = await this.app.artistInfo({artistId: this.state.artistId});
     this.setState(artist);
+    const album = await this.app.inAlbum({trackId: this.state.trackId});
+    const relatedTracks = await this.app.relatedTracks({trackId: this.state.trackId});
     const comments = await this.app.trackCommentList({token: this.app.state.token, trackId: this.props.match.params.trackId, limit: DEFAULT_LIMIT});
-    this.setState({comments});
+    const signedUrl = await this.app.getSignedUrl({trackId: this.state.trackId});
+    this.setState({comments, album, relatedTracks, signedUrl});
+
     const audio = new Audio(this.state.trackUrl);
     audio.addEventListener('loadeddata', () => {
       const duration = audio.duration;
       this.setState({audio, duration});
     });
-
-    console.log(this.state);
   }
 
   componentWillUnmount() {
@@ -81,17 +87,11 @@ export default class TrackDetailPage extends React.Component {
     }
 
     this.state.audio.addEventListener('timeupdate', () => {
-      const currentTime = Math.floor(this.state.audio.currentTime);
-      this.setState({currentTime});
+      this.currentTime.current.innerText = formatTime(Math.floor(this.state.audio.currentTime)).toString();
+      this.progress.current.style.width = `${this.state.audio.currentTime / this.state.duration * 100}%`;
     });
 
     this.setState({playing});
-  }
-
-  async handleTime(e) {
-    const currentTime = Math.floor(e.target.currentTime);
-    console.log(currentTime);
-    this.setState({currentTime});
   }
 
   handleComment(e) {
@@ -105,7 +105,7 @@ export default class TrackDetailPage extends React.Component {
 
   async createComment(e) {
     e.preventDefault();
-    await this.app.createComment({token: this.app.state.token, trackId: this.state.trackId, comment: this.state.comment, timestamp: this.state.currentTime});
+    await this.app.createComment({token: this.app.state.token, trackId: this.state.trackId, comment: this.state.comment, timestamp: this.state.audio.currentTime});
     const comments = await this.app.trackCommentList({token: this.app.state.token, trackId: this.props.match.params.trackId, limit: DEFAULT_LIMIT});
     this.setState({comments});
   }
@@ -116,16 +116,17 @@ export default class TrackDetailPage extends React.Component {
     this.setState({comments});
   }
 
-  render() {
-    const {playing, artistName, artistAvatarUrl, title, coverUrl, colors, trackUrl, releaseDate, avatarUrl,
-      comment, followingCount, trackCount, comments, duration, currentTime} = this.state;
+  async downloadFile() {
+    await this.app.downloadFile({trackId: this.state.trackId});
+  }
 
-    const curr = Math.floor(currentTime / duration * 100);
-    console.log(curr);
+  render() {
+    const {playing, artistName, artistAvatarUrl, title, coverUrl, trackUrl, colors, releaseDate, avatarUrl,
+      comment, followingCount, trackCount, comments, duration, album, relatedTracks, signedUrl} = this.state;
+
+    const isOwner = this.app.state.user && (this.app.state.user.userName === artistName);
+
     return <div class="W(80%) Mx(a)">
-      {/* {trackUrl && <audio controls onTimeUpdate={this.handleTime}>
-        <source src={trackUrl} type="audio/mpeg"/>
-      </audio>} */}
       <div class="D(f) P(20px) My(20px) Miw(800px)" style={{background: `linear-gradient(135deg, rgba(${colors[0][0]}, ${colors[0][1]}, ${colors[0][2]}, 0.6), 
         rgba(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]}, 0.5), rgba(${colors[2][0]}, ${colors[2][1]}, ${colors[2][2]}, 0.5))`}}>
         <div class="W(70%)">
@@ -144,12 +145,9 @@ export default class TrackDetailPage extends React.Component {
           </div>
           <div class="Pos(r)">
             <div class="Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) H(26px)">
-              <span class="Fl(start) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">{formatTime(currentTime)}</span>
+              <span ref={this.currentTime} class="Fl(start) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">0:00</span>
               <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">{formatTime(duration)}</span>
-              {/* {trackUrl && <audio controls class="Pos(a) W(100%) Start(0px) Py(24px) O(n)">
-              <source src={trackUrl} type="audio/mpeg"/>
-            </audio>} */}
-              <div class="B(-0.5px) Pos(a) Mt(60px) Bdbs(s) Bdbw(3px) Bdbc(black) H(26px)" style={{width: `${curr}%`}}/>
+              <div ref={this.progress} class="B(-0.5px) Pos(a) Mt(60px) Bdbs(s) Bdbw(3px) Bdbc(black) H(26px)"/>
             </div>
 
             {comments.map((comment) => <TrackComment key={comment._id} id={comment._id}
@@ -175,7 +173,7 @@ export default class TrackDetailPage extends React.Component {
           </div>
 
           <div class="D(f) Jc(sb) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) Ai(b) Pb(10px)">
-            <TrackPanel/>
+            <TrackPanel isOwner={isOwner} signedUrl={signedUrl} title={title} signedUrl={signedUrl}/>
             <div>
               <span class="Fz(14px) Mend(20px) C(#999999)"><i class="Fz(12px) Mend(2px) fas fa-play"></i> 34k</span>
               <span class="Fz(14px) C(#999999)"><i class="Mend(2px) fas fa-heart"></i> 34k</span>
@@ -202,29 +200,30 @@ export default class TrackDetailPage extends React.Component {
                 commentAuthorId={comment.commentAuthorId} commentAuthorName={comment.commentAuthorName}
                 commentAuthorAvatarUrl={comment.commentAuthorAvatarUrl} body={comment.body} date={comment.date}
                 timestamp={comment.timestamp} colors={colors} isOwner={comment.isOwner} deleteComment={this.deleteComment}/>)}
-
             </div>
           </div>
-
         </div>
 
-        <div class="Px(30px) Miw(380px)">
-          <div class="C(#999999) Fz(16px) Py(4px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
-            <span>Related tracks</span>
-            <Link to="/track/related" class="C(#999999) Td(n):h C(black):h"><span class="Fl(end)">View all</span></Link>
-          </div>
-          <TrackSmall/>
-          <TrackSmall/>
-          <TrackSmall/>
-          <TrackSmall/>
+        {relatedTracks.length !== 0 && album && <div class="Px(30px) Miw(380px)">
+          {relatedTracks.length !== 0 && <div>
+            <div class="C(#999999) Fz(16px) Py(4px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
+              <span>Related tracks</span>
+              <Link to="/track/related" class="C(#999999) Td(n):h C(black):h"><span class="Fl(end)">View all</span></Link>
+            </div>
+            {relatedTracks.map((track) => <TrackSmall key={track._id} id={track._id}
+              artistName={track.artistName} artistAvatarUrl={track.artistAvatarUrl} title={track.title}
+              likeCount={track.likeCount} commentCount={track.commentCount} playCount={track.playCount} />)}
+          </div>}
 
-          <div class="C(#999999) Fz(16px) Mt(30px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
-            <span>In albums</span>
-            <Link to="/track/related" class="C(#999999) Td(n):h C(black):h"><span class="Fl(end)">View all</span></Link>
-          </div>
-          <AlbumSmall/>
+          {album && <div>
+            <div class="C(#999999) Fz(16px) Mt(30px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
+              <span>In albums</span>
+              <Link to="/track/related" class="C(#999999) Td(n):h C(black):h"><span class="Fl(end)">View all</span></Link>
+            </div>
+            <AlbumSmall/>
+          </div>}
+        </div>}
 
-        </div>
       </div>
 
 
