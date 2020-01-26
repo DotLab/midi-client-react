@@ -11,9 +11,11 @@ export default class FollowingArtist extends React.Component {
 
 
   render() {
+    const {avatarUrl, artistName} = this.props;
+
     return <div class="Mx(20px) D(ib) Mb(60px) W(160px)">
-      <Link to="/artist/all"><img class="H(160px) H(160px)" src="https://avatarfiles.alphacoders.com/878/87813.png" alt=""/></Link>
-      <Link to="/artist/all" class="D(f) Jc(c) My(10px) Td(n):h"><div class="C(black)">Lisa</div></Link>
+      <Link to={{pathname: `/${artistName}/all`}}><img class="H(160px) H(160px)" src={avatarUrl} alt=""/></Link>
+      <Link to={{pathname: `/${artistName}/all`}} class="D(f) Jc(c) My(10px) Td(n):h"><div class="C(black)">{artistName}</div></Link>
     </div>;
   }
 }

@@ -80,7 +80,7 @@ export default class ArtistHomepage extends React.Component {
 
   render() {
     const {tab} = this.props;
-    const {following, artistName, avatarUrl, overview, bio,
+    const {following, artistName, avatarUrl, bio,
       followingCount, followerCount, trackCount, all, popularTracks, tracks, albums} = this.state;
     const isOwner = this.app.state.user && (this.app.state.user.userName === artistName);
 

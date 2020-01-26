@@ -199,7 +199,6 @@ export default class App extends React.Component {
 
   async favored({token}) {
     const res = await this.genericApi1('/v1/tracks/favored', {token});
-    console.log(res);
     return res.payload;
   }
 
@@ -241,6 +240,27 @@ export default class App extends React.Component {
     return res.payload;
   }
 
+  async likedTracks({token}) {
+    const res = await this.genericApi1('/v1/users/liked-tracks', {token});
+    return res.payload;
+  }
+
+  async likedAlbums({token}) {
+    const res = await this.genericApi1('/v1/users/liked-albums', {token});
+    return res.payload;
+  }
+
+  async followerArtists({token}) {
+    const res = await this.genericApi1('/v1/users/follower-artists', {token});
+    return res.payload;
+  }
+
+  async followingArtists({token}) {
+    const res = await this.genericApi1('/v1/users/following-artists', {token});
+    return res.payload;
+  }
+
+
   render() {
     return <div>
       <PropsRoute path="/" component={Navbar} app={this}/>
@@ -254,15 +274,10 @@ export default class App extends React.Component {
         <PropsRoute exact path="/:userName/following" component={ArtistMeta} tab={FOLLOWING} app={this}/>
         <PropsRoute exact path="/:userName/follower" component={ArtistMeta} tab={FOLLOWER} app={this}/>
 
-        <PropsRoute exact path="/library/likes" component={LibraryPage} tab={LIKES} app={this}/>
-        <PropsRoute exact path="/library/albums" component={LibraryPage} tab={ALBUMS} app={this}/>
-        <PropsRoute exact path="/library/following" component={LibraryPage} tab={FOLLOWING} app={this}/>
-        <PropsRoute exact path="/library/follower" component={LibraryPage} tab={FOLLOWER} app={this}/>
-
-        <PropsRoute exact path="/artist/all" component={ArtistHomepage} tab={ALL} app={this}/>
-        <PropsRoute exact path="/artist/popular" component={ArtistHomepage} tab={POPULAR} app={this}/>
-        <PropsRoute exact path="/artist/tracks" component={ArtistHomepage} tab={TRACKS} app={this}/>
-        <PropsRoute exact path="/artist/albums" component={ArtistHomepage} tab={ALBUMS} app={this}/>
+        <PropsRoute exact path="/you/library/likes" component={LibraryPage} tab={LIKES} app={this}/>
+        <PropsRoute exact path="/you/library/albums" component={LibraryPage} tab={ALBUMS} app={this}/>
+        <PropsRoute exact path="/you/library/following" component={LibraryPage} tab={FOLLOWING} app={this}/>
+        <PropsRoute exact path="/you/library/follower" component={LibraryPage} tab={FOLLOWER} app={this}/>
 
         <PropsRoute exact path="/:userName/:trackId" component={TrackDetailPage} app={this}/>
         <PropsRoute exact path="/:userName/:trackId/edit" component={EditPage} type={TRACKS} app={this}/>

@@ -45,7 +45,7 @@ export default class Navbar extends React.Component {
             <span class="Mstart(8px) Fz(20px)">Midi</span>
           </Link>
           <Link class="Mstart(20px) Td(n):h C(white) C($pink):h Fz(16px)" to="/">Home</Link>
-          <Link class="Mstart(20px) Td(n):h C(white) C($pink):h Fz(16px)" to="/library/likes">Library</Link>
+          {this.app.state.user && <Link class="Mstart(20px) Td(n):h C(white) C($pink):h Fz(16px)" to="/you/library/likes">Library</Link>}
         </div>
         <div>
           <span class="Lh(60px) D(ib)">
