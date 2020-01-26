@@ -59,7 +59,9 @@ export default class TrackDetailPage extends React.Component {
     }
 
     const artist = await this.app.artistInfo({artistId: this.state.artistId});
-    this.setState(artist);
+    this.setState({artistAvatarUrl: artist.avatarUrl, followingCount: artist.followingCount,
+      trackCount: artist.trackCount});
+
     const album = await this.app.inAlbum({trackId: this.state.trackId});
     const relatedTracks = await this.app.relatedTracks({trackId: this.state.trackId});
     const comments = await this.app.trackCommentList({token: this.app.state.token, trackId: this.props.match.params.trackId, limit: DEFAULT_LIMIT});
@@ -70,8 +72,8 @@ export default class TrackDetailPage extends React.Component {
       liked = await this.app.trackLikeStatus({token: this.app.state.token, trackId: this.state.trackId});
       console.log(liked);
     }
-
     this.setState({comments, album, relatedTracks, signedUrl, liked, likeCount});
+
     const audio = new Audio(this.state.trackUrl);
     audio.addEventListener('loadeddata', () => {
       const duration = audio.duration;
@@ -87,7 +89,9 @@ export default class TrackDetailPage extends React.Component {
     }
 
     const artist = await this.app.artistInfo({artistId: this.state.artistId});
-    this.setState(artist);
+    this.setState({artistAvatarUrl: artist.avatarUrl, followingCount: artist.followingCount,
+      trackCount: artist.trackCount});
+
     const album = await this.app.inAlbum({trackId: newProps.match.params.trackId});
     const relatedTracks = await this.app.relatedTracks({trackId: newProps.match.params.trackId});
     const comments = await this.app.trackCommentList({token: this.app.state.token, trackId: this.props.match.params.trackId, limit: DEFAULT_LIMIT});
@@ -110,6 +114,7 @@ export default class TrackDetailPage extends React.Component {
   componentWillUnmount() {
     if (this.state.audio) {
       this.state.audio.pause();
+      this.setState({audio: null});
     }
   }
 
@@ -123,8 +128,10 @@ export default class TrackDetailPage extends React.Component {
     }
 
     this.state.audio.addEventListener('timeupdate', () => {
-      this.currentTime.current.innerText = formatTime(Math.floor(this.state.audio.currentTime)).toString();
-      this.progress.current.style.width = `${this.state.audio.currentTime / this.state.duration * 100}%`;
+      if (this.currentTime.current) {
+        this.currentTime.current.innerText = formatTime(Math.floor(this.state.audio.currentTime)).toString();
+        this.progress.current.style.width = `${this.state.audio.currentTime / this.state.duration * 100}%`;
+      }
     });
 
     this.setState({playing});
@@ -209,7 +216,7 @@ export default class TrackDetailPage extends React.Component {
               <div ref={this.progress} class="B(-0.5px) Pos(a) Mt(60px) Bdbs(s) Bdbw(3px) Bdbc(black) H(26px)"/>
             </div>
 
-            {comments.map((comment) => <TrackComment key={comment._id} id={comment._id}
+            {comments.map((comment) => <TrackComment key={comment._id} id={comment._id} textColor="white" Pt="10"
               commentAuthorId={comment.commentAuthorId} commentAuthorName={comment.commentAuthorName}
               commentAuthorAvatarUrl={comment.commentAuthorAvatarUrl} body={comment.body} date={comment.date}
               timestamp={comment.timestamp} colors={colors} duration={duration}/>)}

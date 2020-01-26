@@ -1,26 +1,70 @@
 import React from 'react';
-import Lisa from './Lisa.jpg';
 import Track from './Track';
 import Album from './Album';
 import {Link} from 'react-router-dom';
-import {ALL, POPULAR, TRACKS, ALBUMS} from './utils';
+import {ALL, POPULAR, TRACKS, ALBUMS, DEFAULT_LIMIT} from './utils';
 
 export default class ArtistHomepage extends React.Component {
   constructor(props) {
     super(props);
     this.app = props.app;
+
+    this.state = {
+      artistId: null,
+      artistName: this.props.match.params.userName,
+      avatarUrl: null,
+      followingCount: 0,
+      followerCount: 0,
+      trackCount: 0,
+
+      followed: false,
+      all: [],
+      popularTracks: [],
+      tracks: [],
+      albums: [],
+    };
+
+    this.trackCommentList = this.trackCommentList.bind(this);
+    this.getSignedUrl = this.getSignedUrl.bind(this);
+    this.trackLikeStatus = this.trackLikeStatus.bind(this);
+  }
+
+  async componentDidMount() {
+    const artist = await this.app.artistInfo({artistName: this.props.match.params.userName});
+    this.setState(artist);
+
+    const all = await this.app.all({artistName: this.props.match.params.userName});
+    const popularTracks = await this.app.popularTracks({artistName: this.props.match.params.userName, limit: DEFAULT_LIMIT});
+    const tracks = await this.app.tracks({artistName: this.props.match.params.userName});
+    const albums = await this.app.albums({artistName: this.props.match.params.userName});
+    this.setState({all, popularTracks, tracks, albums});
+  }
+
+  async trackCommentList({trackId}) {
+    return await this.app.trackCommentList({token: this.app.state.token, trackId, limit: DEFAULT_LIMIT});
+  }
+
+  async getSignedUrl({trackId}) {
+    return await this.app.getSignedUrl({trackId});
+  }
+
+  async trackLikeStatus({trackId}) {
+    return await this.app.trackLikeStatus({token: this.app.state.token, trackId});
   }
 
   render() {
     const {tab} = this.props;
-    const following = true;
+    const {following, artistName, avatarUrl, followingCount, followerCount, trackCount, followed, all, popularTracks, tracks, albums} = this.state;
+    const isOwner = this.app.state.user && (this.app.state.user.userName === artistName);
 
     return <div class="W(80%) Mx(a)">
       <div class="Py(20px)">
         <div class="Pos(r) D(f) Fxd(c) Fl(start) W(100%) Py(20px)">
-          <img class="W(300px) H(300px) Op(0.5)" src={Lisa} alt="lisa"/>
+          {!avatarUrl && <div class="W(300px) H(300px) Op(0.5)" style={{background: 'linear-gradient(135deg, #956E53, #70929c)'}} ></div>}
+          {avatarUrl && <img class="W(300px) H(300px) Op(0.5)" src={avatarUrl} alt="avatar"/>}
+
           <div class="Pos(a) Pt(120px)">
-            <div class="Fz(50px) Px(20px) Fw(b) C(white)">Lisa</div>
+            <div class="Fz(50px) Px(20px) Fw(b) C(white)">{artistName}</div>
             <div class="My(20px)">
               <button class="Bdc(t) Bdrs(4px) Bgc(#6c757d) C(white) C(white):h W(90px) Px(20px) Mx(20px)">Play</button>
               {following && <button class="Bgc($pink) Bdc(t) C(white) Bdrs(4px) W(90px) Px(20px) Mx(20px)">Follow</button>}
@@ -41,27 +85,24 @@ export default class ArtistHomepage extends React.Component {
       <div class="D(f)">
         {tab === ALL && <div class="Pt(40px) W(70%) Miw(700px) Pend(20px) Bdends(s) Bdendc(#f2f2f2) Bdendw(1px)">
           <div class="Fz(22px) Mb(20px)">Recent</div>
-          <Track/>
-          <Track/>
-          <Track/>
-          <Track/>
-          <Track/>
+          {all.map((track) => <Track key={track._id} id={track._id} coverUrl={track.coverUrl} artistName={track.artistName}
+            title={track.title} releaseDate={track.releaseDate} trackUrl={track.trackUrl}
+            trackLikeStatus={this.trackLikeStatus} trackCommentList={this.trackCommentList}
+            getSignedUrl={this.getSignedUrl} user={this.app.state.user} isOwner={isOwner}/>)}
         </div>}
 
         {tab === POPULAR && <div class="Pt(40px) W(70%) Miw(700px) Pend(20px) Bdends(s) Bdendc(#f2f2f2) Bdendw(1px)">
-          <Track/>
-          <Track/>
-          <Track/>
-          <Track/>
-          <Track/>
+          {popularTracks.map((track) => <Track key={track._id} id={track._id} coverUrl={track.coverUrl} artistName={track.artistName}
+            title={track.title} releaseDate={track.releaseDate} trackUrl={track.trackUrl}
+            trackLikeStatus={this.trackLikeStatus} trackCommentList={this.trackCommentList}
+            getSignedUrl={this.getSignedUrl} user={this.app.state.user} isOwner={isOwner}/>)}
         </div>}
 
         {tab === TRACKS && <div class="Pt(40px) W(70%) Miw(700px) Pend(20px) Bdends(s) Bdendc(#f2f2f2) Bdendw(1px)">
-          <Track/>
-          <Track/>
-          <Track/>
-          <Track/>
-          <Track/>
+          {tracks.map((track) => <Track key={track._id} id={track._id} coverUrl={track.coverUrl} artistName={track.artistName}
+            title={track.title} releaseDate={track.releaseDate} trackUrl={track.trackUrl}
+            trackLikeStatus={this.trackLikeStatus} trackCommentList={this.trackCommentList}
+            getSignedUrl={this.getSignedUrl} user={this.app.state.user} isOwner={isOwner}/>)}
         </div>}
 
         {tab === ALBUMS && <div class="Pt(40px) W(70%) Miw(700px) Pend(20px) Bdends(s) Bdendc(#f2f2f2) Bdendw(1px)">
@@ -73,15 +114,15 @@ export default class ArtistHomepage extends React.Component {
         <div class="P(30px) Miw(400px)">
           <span class="D(ib) C(#999999) Pend(20px)">
             <div class="Fz(14px)">Followers</div>
-            <div class="Fz(20px)">387</div>
+            <div class="Fz(20px)">{followerCount}</div>
           </span>
           <span class="D(ib) C(#999999) Px(20px) Bdstarts(s) Bdstartw(1px) Bdstartc(#f2f2f2) Bdends(s) Bdendw(1px) Bdendc(lightgray)">
-            <div class="Fz(14px)">Followers</div>
-            <div class="Fz(20px)">387</div>
+            <div class="Fz(14px)">Followings</div>
+            <div class="Fz(20px)">{followingCount}</div>
           </span>
           <span class="D(ib) C(#999999) Px(20px)">
             <div class="Fz(14px)">Tracks</div>
-            <div class="Fz(20px)">387</div>
+            <div class="Fz(20px)">{trackCount}</div>
           </span>
           <div class="My(20px)">
             <i class="fas fa-globe-americas"></i> Official Website

@@ -11,7 +11,7 @@ export default class TrackComment extends React.Component {
   }
 
   render() {
-    const {commentAuthorName, commentAuthorAvatarUrl, body, timestamp, duration, colors} = this.props;
+    const {commentAuthorName, commentAuthorAvatarUrl, body, timestamp, duration, colors, textColor, Pt} = this.props;
     const {hover} = this.state;
     const pos = timestamp / duration * 100;
 
@@ -25,11 +25,11 @@ export default class TrackComment extends React.Component {
 
       {/* <img class="H(20px) W(20px) " onMouseEnter={() => this.setState({hover: true})}
         onMouseLeave={() => this.setState({hover: false})} src="https://i1.sndcdn.com/artworks-EfwX4O5Coal6-0-t500x500.jpg" alt=""/> */}
-      <div class={'Trsdu(700ms) Pt(10px) Bdstarts(s) Bdstartc($pink-2) Bdstartw(1px) ' + (hover ? 'Op(1)' : 'Op(0)')}
+      <div class={'Trsdu(700ms) W(maxc) Bdstarts(s) Bdstartc($pink-2) Bdstartw(1px) ' + (hover ? 'Op(1)' : 'Op(0)')} style={{paddingTop: Pt + 'px'}}
         onMouseEnter={() => this.setState({hover: true})}
         onMouseLeave={() => this.setState({hover: false})}>
         <span class="C($pink-2) Mx(6px) Fw(600) Fz(14px)">{commentAuthorName}</span>
-        <span class="Fz(14px) C(white)">{body}</span>
+        <span class="Fz(14px) W(100%)" style={{color: textColor}}>{body}</span>
       </div>
     </div>;
   }

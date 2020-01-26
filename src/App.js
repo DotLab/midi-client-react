@@ -7,7 +7,6 @@ import ArtistHomepage from './components/ArtistHomepage';
 import TrackDetailPage from './components/TrackDetailPage';
 import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
-import ProfilePage from './components/ProfilePage';
 
 import {Switch} from 'react-router-dom';
 import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING, FOLLOWER, PROFILE, ACCOUNT, SECURITY, TRACK} from './components/utils';
@@ -16,6 +15,7 @@ import UploadPage from './components/UploadPage';
 import LibraryPage from './components/LibraryPage';
 import EditPage from './components/EditPage';
 import SettingPage from './components/SettingPage';
+import ArtistMeta from './components/ArtistMeta';
 
 const API_SUCCESS = 'SUCCESS';
 const API_URL = 'http://localhost:3000';
@@ -127,8 +127,8 @@ export default class App extends React.Component {
     return res.payload;
   }
 
-  async artistInfo({artistId}) {
-    const res = await this.genericApi1('/v1/users/artist-info', {artistId});
+  async artistInfo({artistId, artistName}) {
+    const res = await this.genericApi1('/v1/users/artist-info', {artistId, artistName});
     return res.payload;
   }
 
@@ -203,32 +203,55 @@ export default class App extends React.Component {
     return res.payload;
   }
 
+  async all({artistName}) {
+    const res = await this.genericApi1('/v1/users/all-midi', {artistName});
+    return res.payload;
+  }
+
+  async popularTracks({artistName, limit}) {
+    const res = await this.genericApi1('/v1/users/popular-tracks', {artistName, limit});
+    return res.payload;
+  }
+
+  async tracks({artistName}) {
+    const res = await this.genericApi1('/v1/users/tracks', {artistName});
+    return res.payload;
+  }
+
+  async albums({artistName}) {
+    const res = await this.genericApi1('/v1/users/albums', {artistName});
+    return res.payload;
+  }
 
   render() {
     return <div>
       <PropsRoute path="/" component={Navbar} app={this}/>
       <Switch>
         <PropsRoute exact path="/" component={Homepage} app={this}/>
+
+        <PropsRoute exact path="/:userName/all" component={ArtistHomepage} tab={ALL} app={this}/>
+        <PropsRoute exact path="/:userName/popular" component={ArtistHomepage} tab={POPULAR} app={this}/>
+        <PropsRoute exact path="/:userName/tracks" component={ArtistHomepage} tab={TRACKS} app={this}/>
+        <PropsRoute exact path="/:userName/albums" component={ArtistHomepage} tab={ALBUMS} app={this}/>
+        <PropsRoute exact path="/:userName/following" component={ArtistMeta} tab={FOLLOWING} app={this}/>
+        <PropsRoute exact path="/:userName/follower" component={ArtistMeta} tab={FOLLOWER} app={this}/>
+
+        <PropsRoute exact path="/library/likes" component={LibraryPage} tab={LIKES} app={this}/>
+        <PropsRoute exact path="/library/albums" component={LibraryPage} tab={ALBUMS} app={this}/>
+        <PropsRoute exact path="/library/following" component={LibraryPage} tab={FOLLOWING} app={this}/>
+        <PropsRoute exact path="/library/follower" component={LibraryPage} tab={FOLLOWER} app={this}/>
+
         <PropsRoute exact path="/artist/all" component={ArtistHomepage} tab={ALL} app={this}/>
         <PropsRoute exact path="/artist/popular" component={ArtistHomepage} tab={POPULAR} app={this}/>
         <PropsRoute exact path="/artist/tracks" component={ArtistHomepage} tab={TRACKS} app={this}/>
         <PropsRoute exact path="/artist/albums" component={ArtistHomepage} tab={ALBUMS} app={this}/>
+
         <PropsRoute exact path="/:userName/:trackId" component={TrackDetailPage} app={this}/>
         <PropsRoute exact path="/:userName/:trackId/edit" component={EditPage} type={TRACKS} app={this}/>
         <PropsRoute exact path="/:userName/album/:albumId" component={AlbumDetailPage} app={this}/>
         <PropsRoute exact path="/register" component={RegisterPage} app={this}/>
         <PropsRoute exact path="/login" component={LoginPage} app={this}/>
         <PropsRoute exact path="/upload" component={UploadPage} app={this}/>
-        <PropsRoute exact path="/profile/all" component={ProfilePage} tab={ALL} app={this}/>
-        <PropsRoute exact path="/profile/popular" component={ProfilePage} tab={POPULAR} app={this}/>
-        <PropsRoute exact path="/profile/tracks" component={ProfilePage} tab={TRACKS} app={this}/>
-        <PropsRoute exact path="/profile/albums" component={ProfilePage} tab={ALBUMS} app={this}/>
-        <PropsRoute exact path="/profile/likes" component={ProfilePage} tab={LIKES} app={this}/>
-        <PropsRoute exact path="/profile/following" component={ProfilePage} tab={FOLLOWING} app={this}/>
-        <PropsRoute exact path="/library/likes" component={LibraryPage} tab={LIKES} app={this}/>
-        <PropsRoute exact path="/library/albums" component={LibraryPage} tab={ALBUMS} app={this}/>
-        <PropsRoute exact path="/library/following" component={LibraryPage} tab={FOLLOWING} app={this}/>
-        <PropsRoute exact path="/library/follower" component={LibraryPage} tab={FOLLOWER} app={this}/>
         <PropsRoute exact path="/album/edit" component={EditPage} type={ALBUMS} app={this}/>
         <PropsRoute exact path="/settings/profile" component={SettingPage} app={this} tab={PROFILE}/>
         <PropsRoute exact path="/settings/account" component={SettingPage} app={this} tab={ACCOUNT}/>
