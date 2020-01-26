@@ -260,6 +260,19 @@ export default class App extends React.Component {
     return res.payload;
   }
 
+  async uploadAvatar({token, buffer}) {
+    const res = await this.genericApi1('/v1/users/avatar', {token, buffer});
+    return res.payload;
+  }
+
+  async updateProfile({displayName, overview, token}) {
+    await this.genericApi1('/v1/users/profile/update', {displayName, overview, token});
+  }
+
+  async userInfo({token}) {
+    const res = await this.genericApi1('/v1/users/info', {token});
+    return res.payload;
+  }
 
   render() {
     return <div>
@@ -278,6 +291,9 @@ export default class App extends React.Component {
         <PropsRoute exact path="/you/library/albums" component={LibraryPage} tab={ALBUMS} app={this}/>
         <PropsRoute exact path="/you/library/following" component={LibraryPage} tab={FOLLOWING} app={this}/>
         <PropsRoute exact path="/you/library/follower" component={LibraryPage} tab={FOLLOWER} app={this}/>
+        <PropsRoute exact path="/settings/profile" component={SettingPage} app={this} tab={PROFILE}/>
+        <PropsRoute exact path="/settings/account" component={SettingPage} app={this} tab={ACCOUNT}/>
+        <PropsRoute exact path="/settings/security" component={SettingPage} app={this} tab={SECURITY}/>
 
         <PropsRoute exact path="/:userName/:trackId" component={TrackDetailPage} app={this}/>
         <PropsRoute exact path="/:userName/:trackId/edit" component={EditPage} type={TRACKS} app={this}/>
@@ -286,9 +302,6 @@ export default class App extends React.Component {
         <PropsRoute exact path="/login" component={LoginPage} app={this}/>
         <PropsRoute exact path="/upload" component={UploadPage} app={this}/>
         <PropsRoute exact path="/album/edit" component={EditPage} type={ALBUMS} app={this}/>
-        <PropsRoute exact path="/settings/profile" component={SettingPage} app={this} tab={PROFILE}/>
-        <PropsRoute exact path="/settings/account" component={SettingPage} app={this} tab={ACCOUNT}/>
-        <PropsRoute exact path="/settings/security" component={SettingPage} app={this} tab={SECURITY}/>
 
       </Switch>
     </div>;

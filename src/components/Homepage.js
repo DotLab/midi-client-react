@@ -18,7 +18,7 @@ export default class Homepage extends React.Component {
     const newReleases = await this.app.newReleases({limit: DEFAULT_LIMIT});
     const trending = await this.app.trending({limit: DEFAULT_LIMIT});
     this.setState({newReleases, trending});
-    if (this.app.state.token) {
+    if (this.app.state.user) {
       const favored = await this.app.favored({token: this.app.state.token});
       this.setState({favored});
     }

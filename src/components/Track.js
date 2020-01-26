@@ -40,6 +40,13 @@ export default class Track extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    if (this.state.audio) {
+      this.state.audio.pause();
+      this.setState({audio: null});
+    }
+  }
+
   async play(e) {
     const playing = !(this.state.playing);
 

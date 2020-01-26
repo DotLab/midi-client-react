@@ -66,9 +66,9 @@ export default class Navbar extends React.Component {
             </div>
             <ul class={'Pos(a) D(b) W(30px) Px(4px) H(34px) T(0) End(-2px) Mt(40px) Bdc(t) ' + (collapsed ? 'Op(1)' : 'Op(0)')} onMouseLeave={() => this.setState({collapsed: false})}>
               <Link to={{pathname: `/${this.app.state.user.userName}/all`}} class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Profile</Link>
-              <Link to="/likes" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Likes</Link>
-              <Link to="/following" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Following</Link>
-              <Link to="/tracks" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Tracks</Link>
+              <Link to="/you/library/likes" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Likes</Link>
+              <Link to="/you/library/following" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Following</Link>
+
               <Link to="/settings/profile" class="D(b) Td(n):h C(white):h bg-dark C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Settings</Link>
               <li onClick={this.logout} class="D(b) C(white):h Cur(p) Bgc(#343a40) Bgc(black):h C(white) Fz(16px) W(120px) Px(10px) Py(2px)">Sign out</li>
             </ul>

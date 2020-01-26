@@ -1,6 +1,6 @@
 import React from 'react';
 import {onChange} from '../utils';
-const ReactMarkdown = require('react-markdown');
+import ReactMarkdown from 'react-markdown';
 
 const INPUT_STYLE = 'W(100%) H(30px) Fz(14px) O(n) Bds(s) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)';
 const MAX_SIZE = 1048576;
@@ -12,7 +12,7 @@ export default class SettingProfile extends React.Component {
 
     this.state = {
       displayName: '',
-      bio: '',
+
       overview: '',
       preview: false,
     };
@@ -23,8 +23,8 @@ export default class SettingProfile extends React.Component {
   }
 
   async componentDidMount() {
-    // const userInfo = await this.props.userInfo();
-    // this.setState(userInfo);
+    const userInfo = await this.props.userInfo();
+    this.setState(userInfo);
   }
 
   async onFileChange(e) {
@@ -46,14 +46,14 @@ export default class SettingProfile extends React.Component {
 
   async updateProfile(e) {
     e.preventDefault();
-    this.props.updateProfile({displayName: this.state.displayName, bio: this.state.bio,
+    this.props.updateProfile({displayName: this.state.displayName,
       overview: this.state.overview});
     const userInfo = await this.props.userInfo();
     this.setState(userInfo);
   }
 
   render() {
-    const {displayName, bio, overview, preview} = this.state;
+    const {displayName, overview, preview} = this.state;
     const {avatarUrl} = this.props;
     const hasAvatar = avatarUrl.length !== 0;
 
@@ -65,11 +65,6 @@ export default class SettingProfile extends React.Component {
             <span class="Fz(14px) Fw(600)">Display name</span>
             <input class={INPUT_STYLE} name="displayName" value={displayName} onChange={this.onChange} required/>
           </div>
-          <div class="Mt($m-control) W(100%)">
-            <span class="Fz(14px) Fw(600)">Bio</span>
-            <textarea class="D(b) Bdrs(4px) W(100%) H(180px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" placeholder="Tell us a little bit about yourself..."
-              name="bio" value={bio} onChange={this.onChange}/>
-          </div>
 
           <div class="Mt($m-control)">
             <span class="Fz(14px) Fw(600)">Overview</span>
@@ -80,7 +75,7 @@ export default class SettingProfile extends React.Component {
             {!preview && <textarea class="Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px) W(100%) H(180px)" placeholder="Add an overview..." name="overview"
               onChange={this.onChange} value={overview}/>}
             {preview &&
-              <div class="Bds(s) Bdw(2px) Bdc(lightgray) Px(10px) Py(10px) Mt(10px) W(100%)">
+              <div class="Bds(s) Bdw(2px) Bdc(lightgray) Px(10px) Py(10px) Mt(10px) W(maxc) Fz(14px)">
                 <ReactMarkdown source={overview}/>
               </div>}
           </div>

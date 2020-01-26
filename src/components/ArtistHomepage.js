@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import Track from './Track';
 import Album from './Album';
 import {Link} from 'react-router-dom';
@@ -80,7 +81,7 @@ export default class ArtistHomepage extends React.Component {
 
   render() {
     const {tab} = this.props;
-    const {following, artistName, avatarUrl, bio,
+    const {following, artistName, avatarUrl, bio, overview,
       followingCount, followerCount, trackCount, all, popularTracks, tracks, albums} = this.state;
     const isOwner = this.app.state.user && (this.app.state.user.userName === artistName);
 
@@ -93,7 +94,7 @@ export default class ArtistHomepage extends React.Component {
           {avatarUrl && <img class="W(300px) H(300px) Op(0.5)" src={avatarUrl} alt="avatar"/>}
 
           <div class="Pos(a) Pt(120px)">
-            <div class="Fz(50px) Px(20px) Fw(b) C(white)">{artistName}</div>
+            <div class="Fz(50px) Px(20px) Fw(b) C(#999)">{artistName}</div>
             <div class="My(20px)">
               <button class="Bdc(t) Bdrs(4px) Bgc(#6c757d) C(white) C(white):h W(90px) Px(20px) Mx(20px)">Play</button>
               {!following && <button onClick={this.follow} class="Bgc($pink) Bdc(t) C(white) Bdrs(4px) W(90px) Px(20px) Mx(20px)">Follow</button>}
@@ -140,8 +141,8 @@ export default class ArtistHomepage extends React.Component {
 
         </div>}
 
-        <div class="P(30px) Miw(400px)">
-          <span class="D(ib) C(#999999) Pend(20px)">
+        <div class="P(20px) Miw(320px) Maw(400px)">
+          <span class="D(ib) C(#999999) Pend(10px)">
             <div class="Fz(14px)">Followers</div>
             <div class="Fz(20px)">{followerCount}</div>
           </span>
@@ -153,9 +154,7 @@ export default class ArtistHomepage extends React.Component {
             <div class="Fz(14px)">Tracks</div>
             <div class="Fz(20px)">{trackCount}</div>
           </span>
-          <div class="My(20px)">
-            {bio}
-          </div>
+          <div class="My(20px) Fz(12px) Fw(600)"><ReactMarkdown skipHtml={true} source={overview}/></div>
         </div>
       </div>
 
