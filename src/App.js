@@ -223,6 +223,24 @@ export default class App extends React.Component {
     return res.payload;
   }
 
+  async followArtist({token, artistName}) {
+    await this.genericApi1('/v1/users/follow', {token, artistName});
+  }
+
+  async unfollowArtist({token, artistName}) {
+    await this.genericApi1('/v1/users/unfollow', {token, artistName});
+  }
+
+  async followingStatus({token, artistName}) {
+    const res = await this.genericApi1('/v1/users/follow-status', {token, artistName});
+    return res.payload;
+  }
+
+  async followerCount({token, artistName}) {
+    const res = await this.genericApi1('/v1/users/follower-count', {token, artistName});
+    return res.payload;
+  }
+
   render() {
     return <div>
       <PropsRoute path="/" component={Navbar} app={this}/>

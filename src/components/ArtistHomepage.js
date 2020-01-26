@@ -15,9 +15,11 @@ export default class ArtistHomepage extends React.Component {
       avatarUrl: null,
       followingCount: 0,
       followerCount: 0,
+      overview: '',
+      bio: '',
       trackCount: 0,
 
-      followed: false,
+      following: false,
       all: [],
       popularTracks: [],
       tracks: [],
@@ -27,6 +29,8 @@ export default class ArtistHomepage extends React.Component {
     this.trackCommentList = this.trackCommentList.bind(this);
     this.getSignedUrl = this.getSignedUrl.bind(this);
     this.trackLikeStatus = this.trackLikeStatus.bind(this);
+    this.follow = this.follow.bind(this);
+    this.unfollow = this.unfollow.bind(this);
   }
 
   async componentDidMount() {
@@ -37,7 +41,13 @@ export default class ArtistHomepage extends React.Component {
     const popularTracks = await this.app.popularTracks({artistName: this.props.match.params.userName, limit: DEFAULT_LIMIT});
     const tracks = await this.app.tracks({artistName: this.props.match.params.userName});
     const albums = await this.app.albums({artistName: this.props.match.params.userName});
-    this.setState({all, popularTracks, tracks, albums});
+
+    let following = false;
+    if (this.app.state.user) {
+      following = await this.app.followingStatus({token: this.app.state.token, artistName: this.props.match.params.userName});
+      console.log(following);
+    }
+    this.setState({all, popularTracks, tracks, albums, following});
   }
 
   async trackCommentList({trackId}) {
@@ -52,10 +62,29 @@ export default class ArtistHomepage extends React.Component {
     return await this.app.trackLikeStatus({token: this.app.state.token, trackId});
   }
 
+  async follow(e) {
+    e.preventDefault();
+    await this.app.followArtist({token: this.app.state.token, artistName: this.state.artistName});
+    this.setState({following: true});
+    const counts = await this.app.followerCount({artistName: this.state.artistName});
+    this.setState(counts);
+  }
+
+  async unfollow(e) {
+    e.preventDefault();
+    await this.app.unfollowArtist({token: this.app.state.token, artistName: this.state.artistName});
+    this.setState({following: false});
+    const counts = await this.app.followerCount({artistName: this.state.artistName});
+    this.setState(counts);
+  }
+
   render() {
     const {tab} = this.props;
-    const {following, artistName, avatarUrl, followingCount, followerCount, trackCount, followed, all, popularTracks, tracks, albums} = this.state;
+    const {following, artistName, avatarUrl, overview, bio,
+      followingCount, followerCount, trackCount, all, popularTracks, tracks, albums} = this.state;
     const isOwner = this.app.state.user && (this.app.state.user.userName === artistName);
+
+    console.log(followerCount, followingCount);
 
     return <div class="W(80%) Mx(a)">
       <div class="Py(20px)">
@@ -67,8 +96,8 @@ export default class ArtistHomepage extends React.Component {
             <div class="Fz(50px) Px(20px) Fw(b) C(white)">{artistName}</div>
             <div class="My(20px)">
               <button class="Bdc(t) Bdrs(4px) Bgc(#6c757d) C(white) C(white):h W(90px) Px(20px) Mx(20px)">Play</button>
-              {following && <button class="Bgc($pink) Bdc(t) C(white) Bdrs(4px) W(90px) Px(20px) Mx(20px)">Follow</button>}
-              {!following && <button class="btn btn-outline-secondary Bgc(b) Bdrs(4px) Bdc($pink) Bgc($pink):h Bdc($pink):h C(white) C(white):h Px(20px) Py(2px) Mx(20px)">Unfollow</button>}
+              {!following && <button onClick={this.follow} class="Bgc($pink) Bdc(t) C(white) Bdrs(4px) W(90px) Px(20px) Mx(20px)">Follow</button>}
+              {following && <button onClick={this.unfollow} class="btn btn-outline-secondary Bgc(b) Bdrs(4px) Bdc($pink) Bgc($pink):h Bdc($pink):h C(white) C(white):h Px(20px) Py(2px) Mx(20px)">Unfollow</button>}
             </div>
           </div>
         </div>
@@ -77,10 +106,10 @@ export default class ArtistHomepage extends React.Component {
 
       </div>
       <div class="Fw(b) W(100%) Py(8px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
-        <Link to="/artist/all" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc($pink):h C($pink):h  Bdbs(s):h Bdbw(2px) ' + (tab === ALL ? 'C($pink) Bdbs(s)' : 'C(gray)')}>All</Link>
-        <Link to="/artist/popular" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc($pink):h C($pink):h  Bdbs(s):h Bdbw(2px) ' + (tab === POPULAR ? 'C($pink) Bdbs(s)' : 'C(gray)')}>Popular tracks</Link>
-        <Link to="/artist/tracks" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc($pink):h C($pink):h  Bdbs(s):h Bdbw(2px) ' + (tab === TRACKS ? 'C($pink) Bdbs(s)' : 'C(gray)')}>Tracks</Link>
-        <Link to="/artist/albums" class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc($pink):h C($pink):h  Bdbs(s):h Bdbw(2px) ' + (tab === ALBUMS ? 'C($pink) Bdbs(s)' : 'C(gray)')}>Albums</Link>
+        <Link to={{pathname: `/${artistName}/all`}} class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc($pink):h C($pink):h  Bdbs(s):h Bdbw(2px) ' + (tab === ALL ? 'C($pink) Bdbs(s)' : 'C(gray)')}>All</Link>
+        <Link to={{pathname: `/${artistName}/popular`}} class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc($pink):h C($pink):h  Bdbs(s):h Bdbw(2px) ' + (tab === POPULAR ? 'C($pink) Bdbs(s)' : 'C(gray)')}>Popular tracks</Link>
+        <Link to={{pathname: `/${artistName}/tracks`}} class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc($pink):h C($pink):h  Bdbs(s):h Bdbw(2px) ' + (tab === TRACKS ? 'C($pink) Bdbs(s)' : 'C(gray)')}>Tracks</Link>
+        <Link to={{pathname: `/${artistName}/albums`}} class={'Px(20px) Cur(p) Td(n):h Py(9px) Bdbc($pink):h C($pink):h  Bdbs(s):h Bdbw(2px) ' + (tab === ALBUMS ? 'C($pink) Bdbs(s)' : 'C(gray)')}>Albums</Link>
       </div>
       <div class="D(f)">
         {tab === ALL && <div class="Pt(40px) W(70%) Miw(700px) Pend(20px) Bdends(s) Bdendc(#f2f2f2) Bdendw(1px)">
@@ -125,7 +154,7 @@ export default class ArtistHomepage extends React.Component {
             <div class="Fz(20px)">{trackCount}</div>
           </span>
           <div class="My(20px)">
-            <i class="fas fa-globe-americas"></i> Official Website
+            {bio}
           </div>
         </div>
       </div>
