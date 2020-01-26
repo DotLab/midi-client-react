@@ -17,7 +17,6 @@ export default class ArtistHomepage extends React.Component {
       followingCount: 0,
       followerCount: 0,
       overview: '',
-      bio: '',
       trackCount: 0,
 
       following: false,
@@ -81,7 +80,7 @@ export default class ArtistHomepage extends React.Component {
 
   render() {
     const {tab} = this.props;
-    const {following, artistName, avatarUrl, bio, overview,
+    const {following, artistName, avatarUrl, overview,
       followingCount, followerCount, trackCount, all, popularTracks, tracks, albums} = this.state;
     const isOwner = this.app.state.user && (this.app.state.user.userName === artistName);
 
@@ -96,7 +95,6 @@ export default class ArtistHomepage extends React.Component {
           <div class="Pos(a) Pt(120px)">
             <div class="Fz(50px) Px(20px) Fw(b) C(#999)">{artistName}</div>
             <div class="My(20px)">
-              <button class="Bdc(t) Bdrs(4px) Bgc(#6c757d) C(white) C(white):h W(90px) Px(20px) Mx(20px)">Play</button>
               {!following && <button onClick={this.follow} class="Bgc($pink) Bdc(t) C(white) Bdrs(4px) W(90px) Px(20px) Mx(20px)">Follow</button>}
               {following && <button onClick={this.unfollow} class="btn btn-outline-secondary Bgc(b) Bdrs(4px) Bdc($pink) Bgc($pink):h Bdc($pink):h C(white) C(white):h Px(20px) Py(2px) Mx(20px)">Unfollow</button>}
             </div>
