@@ -3,7 +3,8 @@ import React from 'react';
 import {onChange} from '../utils';
 import {NONE, ALT_ROCK, AMBIENT, CLASSICAL, COUNTRY, DANCE, DANCEHALL, DEEPHOUSE, DISCO, DRUM, DUBSTEP,
   ELECTRONIC, FOLK, HIP, HOUSE, INDIE, JAZZ, LATIN, METAL, PIANO, POP, RNB, REGGAE, REGGAETON,
-  ROCK, SOUNDTRACK, TECH, TRANCE, TRAP, TRIPHOP, WORLD, TRACK, ALBUM, EP, SINGLE} from './utils';
+  ROCK, SOUNDTRACK, TECH, TRANCE, TRAP, TRIPHOP, WORLD, ALBUM, SINGLE} from './utils';
+import Album from './Album';
 
 const MAX_SIZE = 31457280;
 const INPUT_STYLE = 'W(100%) H(30px) Fz(14px) O(n) Bds(s) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)';
@@ -14,15 +15,19 @@ export default class UploadPage extends React.Component {
     this.app = props.app;
 
     this.state = {
+      existingAlbum: '',
+      albums: [],
+
       inputKey: '',
       buffers: [],
       fileNames: [],
       fileSizes: [],
 
+      albumTitle: '',
       coverUrl: null,
       coverBuffer: null,
       title: '',
-      type: null,
+      type: '',
       genre: '',
       tags: '',
       description: '',
@@ -35,12 +40,21 @@ export default class UploadPage extends React.Component {
     this.uploadTracks = this.uploadTracks.bind(this);
   }
 
+  async componentDidMount() {
+    const albums = await this.app.getAllAlbums({token: this.app.state.token});
+    this.setState({albums});
+  }
+
   checkRequired() {
-    return this.state.coverUrl && this.state.title.length !== 0 && this.state.type;
+    const checkAlbum = this.state.type === SINGLE || (this.state.type === ALBUM && this.state.albumTitle.length !== 0);
+    return this.state.coverUrl && this.state.title.length !== 0 && checkAlbum;
   }
 
   onFileChange(e) {
     if (!e.target.files[0]) return;
+    if (e.target.files.length > 1) {
+      this.setState({type: ALBUM});
+    }
 
     for (let i = 0; i < e.target.files.length; i++) {
       const name = e.target.files[i].name;
@@ -93,12 +107,13 @@ export default class UploadPage extends React.Component {
 
   async uploadTracks(e) {
     e.preventDefault();
-    const {buffers, fileNames, fileSizes, coverUrl, title, type, genre, tags, description} = this.state;
-    await this.app.uploadTracks({token: this.app.state.token, buffers, fileNames, fileSizes, coverUrl, title, type, genre, tags, description});
+    const {buffers, fileNames, fileSizes, coverUrl, title, albumTitle, type, genre, tags, description} = this.state;
+    await this.app.uploadTracks({token: this.app.state.token, buffers, fileNames, fileSizes, coverUrl, title, albumTitle, type, genre, tags, description});
   }
 
   render() {
-    const {inputKey, buffers, fileNames, coverUrl, title, tags, description} = this.state;
+    const {inputKey, existingAlbum, albums, buffers, fileNames, coverUrl, title, type, tags, description} = this.state;
+    console.log(existingAlbum);
 
     return <div class="W(80%) Mx(a) My(80px) Miw(800px)">
       {fileNames.length !== 0 && <div class="Bdbs(s) Bdbc($pink)">
@@ -106,16 +121,16 @@ export default class UploadPage extends React.Component {
       </div>}
       {!buffers.length && <div class=" D(ib) W(100%) Miw(600px) Ta(c) H(400px) shadow p-2 round">
         <div class="Py(80px)">
-          <label class="Fz(22px) C(#999999)">Upload your tracks and/or albums here</label>
+          <label class="Fz(22px) C(#999999)">Upload your Midi track here</label>
           <div class="Fz(12px) Pstart(40px) My(20px) Pos(r)">
             <input class="Cur(p) Pos(a) Op(0) W(300px) H(40px)"
-              key={inputKey} multiple type="file" name="file"
+              key={inputKey} type="file" name="file"
               accept=".mp3, .mid, .wav"
               onChange={this.onFileChange}/>
             <button class="Bgc($pink) Miw(300px) Fz(20px) C(white) Bdc(t) Bdrs(4px) Py(10px)">Choose files to upload</button>
           </div>
           <div class="Mt(140px) Fz(16px)">
-          Provide FLAC, WAV, ALAC, or AIFF for highest audio quality.
+          Support file type: Midi
           </div>
         </div>
       </div>}
@@ -135,16 +150,37 @@ export default class UploadPage extends React.Component {
               <input required name="title" value={title} onChange={this.onChange} class={INPUT_STYLE} placeholder="Name your track"/>
             </div>
 
-            <div class="Mt($m-control)">
+            {buffers.length === 1 && <div class="Mt($m-control)">
               <div class="Fz(14px) Fw(600) Mb(4px)">Type <span class="C(#cf0000)">*</span></div>
               <select required name="type" onChange={this.onChange} class="W(50%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" defaultValue="invalid">
                 <option value="invalid" disabled class="D(n)"></option>
-                <option value={TRACK}>Track</option>
                 <option value={ALBUM}>Album</option>
-                <option value={EP}>EP</option>
                 <option value={SINGLE}>Single</option>
               </select>
-            </div>
+            </div>}
+
+            {(buffers.length >= 1 && type === ALBUM) && <div class="Mt($m-control)">
+              <div class="Fz(14px) Fw(600) Mb(4px)">Select from existing album or create new album <span class="C(#cf0000)">*</span></div>
+              <select required name="existingAlbum" onChange={this.onChange} class="W(50%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" defaultValue="invalid">
+                <option value="invalid" disabled class="D(n)"></option>
+                <option value="yes">Add to existing album</option>
+                <option value="no">Create new album</option>
+              </select>
+            </div>}
+
+            {type !== SINGLE && buffers.length >= 1 && existingAlbum === 'yes' && <div class="Mt($m-control)">
+              <div class="Fz(14px) Fw(600) Mb(4px)">Select from albums <span class="C(#cf0000)">*</span></div>
+              <select required name="albumTitle" onChange={this.onChange} class="W(50%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" defaultValue="invalid">
+                <option value="invalid" disabled class="D(n)"></option>
+                {albums.map((x) => <option key={x} value={x}>{x}</option>)}
+              </select>
+            </div>}
+
+            {type !== SINGLE && buffers.length >= 1 && existingAlbum === 'no' && <div class="Mt($m-control)">
+              <div class="Fz(14px) Fw(600) Mb(4px)">Album title <span class="C(#cf0000)">*</span></div>
+              <input name="albumTitle" onChange={this.onChange} class={INPUT_STYLE} placeholder="Name your album"/>
+
+            </div>}
 
             <div class="Mt($m-control)">
               <div class="Fz(14px) Fw(600) Mb(4px)">Genre</div>

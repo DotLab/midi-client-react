@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {ALBUMS, BASIC, TRACKS, NONE, ALT_ROCK, AMBIENT, CLASSICAL, COUNTRY, DANCE, DANCEHALL, DEEPHOUSE, DISCO, DRUM, DUBSTEP,
   ELECTRONIC, FOLK, HIP, HOUSE, INDIE, JAZZ, LATIN, METAL, PIANO, POP, RNB, REGGAE, REGGAETON,
-  ROCK, SOUNDTRACK, TECH, TRANCE, TRAP, TRIPHOP, WORLD, TRACK, ALBUM, EP, SINGLE} from './utils';
+  ROCK, SOUNDTRACK, TECH, TRANCE, TRAP, TRIPHOP, WORLD, TRACK, ALBUM, SINGLE} from './utils';
 
 import {onChange} from '../utils';
 import EditAlbumTrack from './EditAlbumTrack';
@@ -19,6 +19,7 @@ export default class EditPage extends React.Component {
     this.state = {
       inputKey: '',
 
+      albumTitle: '',
       coverUrl: null,
       coverBuffer: null,
       title: '',
@@ -99,7 +100,6 @@ export default class EditPage extends React.Component {
                 <option value="invalid" disabled class="D(n)"></option>
                 <option value={TRACK}>Track</option>
                 <option value={ALBUM}>Album</option>
-                <option value={EP}>EP</option>
                 <option value={SINGLE}>Single</option>
               </select>
             </div>

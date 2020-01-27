@@ -23,7 +23,6 @@ export const ROUTE_INVALID = 'invalid';
 
 export const TRACK = 'Track';
 export const ALBUM = 'Album';
-export const EP = 'EP';
 export const SINGLE = 'Single';
 
 export const NONE = 'None';

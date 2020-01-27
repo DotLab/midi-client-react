@@ -9,7 +9,7 @@ import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
 
 import {Switch} from 'react-router-dom';
-import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING, FOLLOWER, PROFILE, ACCOUNT, SECURITY, TRACK} from './components/utils';
+import {ALL, POPULAR, TRACKS, ALBUMS, LIKES, FOLLOWING, FOLLOWER, PROFILE, ACCOUNT, SECURITY, TRACK, SINGLE} from './components/utils';
 import AlbumDetailPage from './components/AlbumDetailPage';
 import UploadPage from './components/UploadPage';
 import LibraryPage from './components/LibraryPage';
@@ -103,9 +103,9 @@ export default class App extends React.Component {
     return res.payload;
   }
 
-  async uploadTracks({token, buffers, fileNames, fileSizes, coverUrl, title, type, genre, tags, description}) {
-    const res = await this.genericApi1('/v1/tracks/upload', {token, buffers, fileNames, fileSizes, coverUrl, title, type, genre, tags, description});
-    if (buffers.length === 1) {
+  async uploadTracks({token, buffers, fileNames, fileSizes, coverUrl, title, albumTitle, type, genre, tags, description}) {
+    const res = await this.genericApi1('/v1/tracks/upload', {token, buffers, fileNames, fileSizes, coverUrl, title, albumTitle, type, genre, tags, description});
+    if (type === SINGLE) {
       this.history.push(`/${this.state.user.userName}/${res.payload}`);
     } else {
       this.history.push(`/${this.state.user.userName}/album/${res.payload}`);
@@ -271,6 +271,21 @@ export default class App extends React.Component {
 
   async userInfo({token}) {
     const res = await this.genericApi1('/v1/users/info', {token});
+    return res.payload;
+  }
+
+  async getAllAlbums({token}) {
+    const res = await this.genericApi1('/v1/albums/listing', {token});
+    return res.payload;
+  }
+
+  async albumDetail({albumId}) {
+    const res = await this.genericApi1('/v1/albums/detail', {albumId});
+    return res.payload;
+  }
+
+  async albumTracks({albumId}) {
+    const res = await this.genericApi1('/v1/albums/tracks', {albumId});
     return res.payload;
   }
 
