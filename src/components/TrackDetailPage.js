@@ -203,7 +203,7 @@ export default class TrackDetailPage extends React.Component {
                 {playing && <span><i class="fas fa-pause"></i></span>}
               </span>
               <div class="Mx(20px)">
-                <div class="bg-dark C(white) Py(2px) Px(8px) W(maxc) My(4px) Fz(16px)">{artistName}</div>
+                <Link to={{pathname: `/${artistName}/all`}}><div class="bg-dark C(white) Py(2px) Px(8px) W(maxc) My(4px) Fz(16px)">{artistName}</div></Link>
                 <div class="bg-dark C(white) Py(2px) Px(8px) W(maxc) Fz(18px)">{title}</div>
               </div>
             </div>
@@ -251,7 +251,7 @@ export default class TrackDetailPage extends React.Component {
               rgba(${colors[1][0]}, ${colors[1][1]}, ${colors[1][2]}, 0.5), rgba(${colors[2][0]}, ${colors[2][1]}, ${colors[2][2]}, 0.5))`}}/>}
               {artistAvatarUrl && <img class="H(120px) W(120px)" src={artistAvatarUrl} alt=""/>}
 
-              <div class="Mt(10px)">{artistName}</div>
+              <Link to={{pathname: `/${artistName}/all`}} class="Td(n):h"><div class="Mt(10px) C(black)">{artistName}</div></Link>
               <span data-toggle="tooltip" title={`${followingCount} followers`} class="Mend(10px) Fz(14px) C(#999999)"><i class="fas fa-user-friends"></i> {followingCount}</span>
               <span data-toggle="tooltip" title={`${trackCount} tracks`} class="Mend(10px) Fz(14px) C(#999999)"><i class="fas fa-list"></i> {trackCount}</span>
               <button class="D(b) Bdc(t) Bdrs(4px) Px(8px) Bgc($pink) C(white) Fz(14px) Mt(10px) H(28px)">Follow</button>
@@ -283,9 +283,8 @@ export default class TrackDetailPage extends React.Component {
           {album && <div>
             <div class="C(#999999) Fz(16px) Mt(30px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
               <span>In albums</span>
-              <Link to="/track/related" class="C(#999999) Td(n):h C(black):h"><span class="Fl(end)">View all</span></Link>
             </div>
-            <AlbumSmall/>
+            <AlbumSmall id={album._id} title={album.title} coverUrl={coverUrl} releaseDate={releaseDate}/>
           </div>}
         </div>}
 

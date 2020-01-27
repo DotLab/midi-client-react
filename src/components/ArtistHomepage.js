@@ -31,6 +31,7 @@ export default class ArtistHomepage extends React.Component {
     this.trackLikeStatus = this.trackLikeStatus.bind(this);
     this.follow = this.follow.bind(this);
     this.unfollow = this.unfollow.bind(this);
+    this.albumTracks = this.albumTracks.bind(this);
   }
 
   async componentDidMount() {
@@ -76,6 +77,10 @@ export default class ArtistHomepage extends React.Component {
     this.setState({following: false});
     const counts = await this.app.followerCount({artistName: this.state.artistName});
     this.setState(counts);
+  }
+
+  async albumTracks({albumId}) {
+    return await this.app.albumTracks({albumId});
   }
 
   render() {
@@ -134,8 +139,9 @@ export default class ArtistHomepage extends React.Component {
         </div>}
 
         {tab === ALBUMS && <div class="Pt(40px) W(70%) Miw(700px) Pend(20px) Bdends(s) Bdendc(#f2f2f2) Bdendw(1px)">
-          <Album/>
-          <Album/>
+          {albums.map((album) => <Album key={album._id} id={album._id} coverUrl={album.coverUrl} artistName={album.artistName}
+            title={album.title} releaseDate={album.releaseDate} albumLikeStatus={this.albumLikeStatus} user={this.app.state.user}
+            isOwner={isOwner} albumTracks={this.albumTracks}/>)}
 
         </div>}
 

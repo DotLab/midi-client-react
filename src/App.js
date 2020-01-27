@@ -289,6 +289,16 @@ export default class App extends React.Component {
     return res.payload;
   }
 
+  async relatedAlbums({albumId}) {
+    const res = await this.genericApi1('/v1/albums/related', {albumId});
+    return res.payload;
+  }
+
+  async getCoverUrl({title}) {
+    const res = await this.genericApi1('/v1/albums/coverUrl', {title});
+    return res.payload;
+  }
+
   render() {
     return <div>
       <PropsRoute path="/" component={Navbar} app={this}/>

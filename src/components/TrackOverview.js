@@ -50,7 +50,7 @@ export default class TrackOverview extends React.Component {
       </div>
       <div>
         <Link to={{pathname: `/${artistName}/${id}`}} class="Td(n):h C(black):h C(black) Mt(6px) Px(4px) Cur(p) Fz(14px) Fw(b)">{title}</Link>
-        <Link to={{pathname: `/${artistName}`}} class="Td(n):h C(black):h D(b) Mt(6px) Px(4px) Cur(p) Fz(12px) C(#999999)">{artistName}</Link>
+        <Link to={{pathname: `/${artistName}/all`}} class="Td(n):h C(black):h D(b) Mt(6px) Px(4px) Cur(p) Fz(12px) C(#999999)">{artistName}</Link>
       </div>
     </div>;
   }

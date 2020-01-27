@@ -20,6 +20,7 @@ export default class AlbumDetailPage extends React.Component {
       colors: [[223, 244, 228], [116, 76, 55], [80, 66, 50]],
       releaseDate: null,
       tracks: [],
+      relatedAlbums: [],
       totalDuration: 0,
 
       followingCount: 0,
@@ -48,6 +49,10 @@ export default class AlbumDetailPage extends React.Component {
 
     const tracks = await this.app.albumTracks({albumId: this.props.match.params.albumId});
     this.setState({tracks});
+
+    const relatedAlbums = await this.app.relatedAlbums({albumId: this.props.match.params.albumId});
+    console.log(relatedAlbums);
+    this.setState({relatedAlbums});
   }
 
   async like() {
@@ -98,7 +103,7 @@ export default class AlbumDetailPage extends React.Component {
 
   render() {
     const {albumId, artistName, artistAvatarUrl, title, coverUrl, colors, releaseDate,
-      tracks, followingCount, trackCount, liked, likeCount} = this.state;
+      tracks, relatedAlbums, followingCount, trackCount, liked, likeCount} = this.state;
 
     const isOwner = this.app.state.user && (this.app.state.user.userName === artistName);
 
@@ -170,10 +175,9 @@ export default class AlbumDetailPage extends React.Component {
 
           <div class="C(#999999) Fz(16px) Mt(30px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2)">
             <span>Albums from this user</span>
-            <Link to="/artist/albums" class="Fl(end) C(#999999) C(#999999):h Td(n):h">View all</Link>
           </div>
-          <AlbumSmall/>
-          <AlbumSmall/>
+          {relatedAlbums.map((album) => <AlbumSmall key={album._id} id={album._id} coverUrl={album.coverUrl} artistName={album.artistName}
+            title={album.title} releaseDate={album.releaseDate}/>)}
 
         </div>
       </div>

@@ -13,6 +13,7 @@ export default class UploadPage extends React.Component {
   constructor(props) {
     super(props);
     this.app = props.app;
+    this.coverUpload = React.createRef();
 
     this.state = {
       existingAlbum: '',
@@ -111,6 +112,15 @@ export default class UploadPage extends React.Component {
     await this.app.uploadTracks({token: this.app.state.token, buffers, fileNames, fileSizes, coverUrl, title, albumTitle, type, genre, tags, description});
   }
 
+  async onSelectAlbum(e) {
+    /* eslint-disable-next-line no-invalid-this */
+    this.setState({[e.target.name]: e.target.value});
+    const coverUrl = this.app.getCoverUrl({albumTitle: e.target.value});
+    this.setState({coverUrl});
+    this.coverUpload.disabled = true;
+  }
+
+
   render() {
     const {inputKey, existingAlbum, albums, buffers, fileNames, coverUrl, title, type, tags, description} = this.state;
     console.log(existingAlbum);
@@ -123,7 +133,7 @@ export default class UploadPage extends React.Component {
         <div class="Py(80px)">
           <label class="Fz(22px) C(#999999)">Upload your Midi track here</label>
           <div class="Fz(12px) Pstart(40px) My(20px) Pos(r)">
-            <input class="Cur(p) Pos(a) Op(0) W(300px) H(40px)"
+            <input ref="coverUpload" class="Cur(p) Pos(a) Op(0) W(300px) H(40px)"
               key={inputKey} type="file" name="file"
               accept=".mp3, .mid, .wav"
               onChange={this.onFileChange}/>
@@ -170,9 +180,9 @@ export default class UploadPage extends React.Component {
 
             {type !== SINGLE && buffers.length >= 1 && existingAlbum === 'yes' && <div class="Mt($m-control)">
               <div class="Fz(14px) Fw(600) Mb(4px)">Select from albums <span class="C(#cf0000)">*</span></div>
-              <select required name="albumTitle" onChange={this.onChange} class="W(50%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" defaultValue="invalid">
+              <select required name="albumTitle" onChange={this.onSelectAlbum} class="W(50%) H(30px) Fz(14px) O(n) Bdrs(4px) Bdc(#ccc) Bdw(1px) Px(6px) Py(2px)" defaultValue="invalid">
                 <option value="invalid" disabled class="D(n)"></option>
-                {albums.map((x) => <option key={x} value={x}>{x}</option>)}
+                {albums.map((x) => <option key={x._id} value={x.title}>{x.title}</option>)}
               </select>
             </div>}
 
