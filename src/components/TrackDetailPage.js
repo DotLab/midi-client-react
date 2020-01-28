@@ -95,7 +95,7 @@ export default class TrackDetailPage extends React.Component {
     const album = await this.app.inAlbum({trackId: newProps.match.params.trackId});
     const relatedTracks = await this.app.relatedTracks({trackId: newProps.match.params.trackId});
     const comments = await this.app.trackCommentList({token: this.app.state.token, trackId: this.props.match.params.trackId, limit: DEFAULT_LIMIT});
-    const signedUrl = await this.app.getSignedUrl({trackId: newProps.match.params.trackId});
+    // const signedUrl = await this.app.getSignedUrl({trackId: newProps.match.params.trackId});
     const likeCount = await this.app.trackLikeCount({token: this.app.state.token, trackId: newProps.match.params.trackId});
     let liked = false;
     if (this.app.state.user) {
@@ -103,7 +103,7 @@ export default class TrackDetailPage extends React.Component {
       console.log(liked);
     }
 
-    this.setState({comments, album, relatedTracks, signedUrl, liked, likeCount});
+    this.setState({comments, album, relatedTracks, liked, likeCount});
     const audio = new Audio(this.state.trackUrl);
     audio.addEventListener('loadeddata', () => {
       const duration = audio.duration;
