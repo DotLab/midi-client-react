@@ -213,7 +213,7 @@ export default class TrackDetailPage extends React.Component {
             </div>
             <span class="Fl(end) C(white)">{formatDate(releaseDate)}</span>
           </div>
-          {this.state.audio && <div class="Pos(r)">
+          <div class="Pos(r)">
             <div class="Mt(60px) Bdbs(s) Bdbw(1px) Bdbc(#f2f2f2) H(26px)">
               <span ref={this.currentTime} class="Fl(start) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">0:00</span>
               <span class="Fl(end) bg-dark Mb(10px) Px(8px) C(lightgray) Fz(14px)">{formatTime(duration)}</span>
@@ -224,7 +224,7 @@ export default class TrackDetailPage extends React.Component {
               commentAuthorId={comment.commentAuthorId} commentAuthorName={comment.commentAuthorName}
               commentAuthorAvatarUrl={comment.commentAuthorAvatarUrl} body={comment.body} date={comment.date}
               timestamp={comment.timestamp} colors={colors} duration={duration}/>)}
-          </div>}
+          </div>
         </div>
         <div class="Mstart(30px) W(30%)">
           <img class="H(100%) W(100%) " src={coverUrl} alt=""/>
