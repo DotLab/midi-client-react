@@ -2,7 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import {Link} from 'react-router-dom';
 
-const INPUT_STYLE = 'H(30px) Bdrs(4px) W(100%) Fz(14px) Fw(400) P(12px) Bdc(t) Bgc(#24292e) C(black) Bgc(white):f O(n)';
+const INPUT_STYLE = 'H(30px) Bdrs(4px) W(100%) Fz(14px) Fw(400) P(12px) Bdc(t) Bgc(#24292e) C(black) Bgc(white):f O(n) Lh(60px)';
 
 export default class Navbar extends React.Component {
   constructor(props) {
