@@ -2,7 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import {Link} from 'react-router-dom';
 
-const INPUT_STYLE = 'H(30px) Bdrs(4px) W(100%) Fz(14px) Fw(400) P(12px) Bdc(t) Bgc(#24292e) C(black) Bgc(white):f O(n) Lh(60px)';
+const INPUT_STYLE = 'H(30px) Bdrs(4px) W(100%) Fz(14px) Fw(400) P(12px) Bdc(t) Bgc(#24292e) C(black) Bgc(white):f O(n)';
 
 export default class Navbar extends React.Component {
   constructor(props) {
@@ -47,12 +47,10 @@ export default class Navbar extends React.Component {
           <Link class="Mstart(20px) Td(n):h C(white) C($pink):h Fz(16px)" to="/">Home</Link>
           {this.app.state.user && <Link class="Mstart(20px) Td(n):h C(white) C($pink):h Fz(16px)" to="/you/library/likes">Library</Link>}
         </div>
-        <div>
-          <span class="Lh(60px) D(ib)">
-            <form>
-              <input class={INPUT_STYLE}/>
-            </form>
-          </span>
+        <div class="Lh(60px)">
+          <form class="D(ib)">
+            <input class={INPUT_STYLE}/>
+          </form>
           {!loggedIn && <span>
             <Link to="/login" class="Bds(s) Bdw(1px) Bdrs(4px) Py(4px) Px(8px) Fz(16px) Mstart(20px) C(white) C($pink):h Td(n):h">Sign in</Link>
             <Link to="/register" class="Bds(s) Bdw(1px) Bdrs(4px) Py(4px) Px(8px) C($pink):h Fz(16px) Mstart(20px) C($pink) Td(n):h">Create account</Link>
